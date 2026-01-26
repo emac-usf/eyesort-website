@@ -1,0 +1,167 @@
+---
+title: First Run
+description: Your first time using EyeSort to label eye-tracking events
+lastUpdated: 2026-01-19
+---
+
+# First Run
+
+This guide walks you through using EyeSort for the first time with the sample dataset.
+
+## Before You Start
+
+1. Ensure EyeSort is [installed](/docs/installation) correctly
+2. Download the [sample dataset](/datasets)
+3. Extract the sample dataset to a known location
+4. Launch EEGLAB in MATLAB
+
+## The EyeSort Workflow
+
+EyeSort follows a sequential workflow:
+
+1. **Load EEG Dataset(s)** - Import your synchronized EEG + eye-tracking data
+2. **Setup Interest Areas** - Define text or pixel-based regions
+3. **Eye-Tracking Event Labeling** - Apply labeling criteria to fixations/saccades
+4. **Generate BDF File** - Create BINLISTER bin descriptor file
+5. **Save Labeled Dataset** - Export for ERP analysis
+
+## Step 1: Load Dataset
+
+In EEGLAB, go to: **EyeSort → 1. Load EEG Dataset(s)**
+
+You'll see two options:
+
+### Option A: Single Dataset Mode
+- Use "Browse" to select a single `.set` file
+- The dataset loads into EEGLAB immediately
+- Good for testing or single-file workflows
+
+### Option B: Batch Mode
+- Select an input directory containing multiple `.set` files
+- Select an output directory for processed files
+- EyeSort validates files and loads the first dataset for preview
+- All subsequent steps will process files one-by-one
+
+**For your first run, use Single Dataset Mode with the sample file.**
+
+## Step 2: Setup Interest Areas
+
+Go to: **EyeSort → 2. Setup Interest Areas → Text-Based Sentence Contents and Interest Areas**
+
+This opens a configuration GUI where you'll specify:
+
+### Key Settings for Sample Dataset:
+
+1. **Browse for IA file** - Select the tab-delimited interest area file
+2. **Sentence offset** - Horizontal pixel offset (e.g., 281)
+3. **Pixels per character** - Character width in pixels (e.g., 14)
+4. **Number of regions** - How many interest areas per trial
+5. **Region names** - Comma-separated list (e.g., "Region1, Region2, Region3")
+6. **Trigger codes**:
+   - Trial start/end (e.g., `S254`, `S255`)
+   - Condition triggers (e.g., `S211, S213, S221, S223`)
+   - Item triggers (supports ranges: `S1:S112`)
+
+### What This Step Does:
+
+EyeSort will:
+- Read your IA file and compute pixel boundaries for each word/region
+- Match trials using trigger codes
+- Assign region membership to each fixation
+- Determine pass structure (first pass, regressions, etc.)
+- Add metadata to `EEG.event` and `EEG` structure
+
+**Tip:** Click "Save Configuration" to reuse these settings later!
+
+## Step 3: Label Events
+
+Go to: **EyeSort → 3. Eye-Tracking Event Labeling**
+
+Now you can apply labeling rules. For example:
+
+### Example Label: "First Fixation on Region 2"
+
+1. **Time-locked region**: Select "Region2"
+2. **Pass**: Select "First"
+3. **Fixation type**: Select "First of Multiple"
+4. **Label description**: Enter "First fixation on Region 2 during first pass"
+5. Click "Add Label"
+
+Each label increments a counter and assigns a 6-digit code: `CCRRLL`
+- `CC` = Condition code (2 digits)
+- `RR` = Region code (2 digits)
+- `LL` = Label number (01-99)
+
+### Try Multiple Labels:
+
+Create labels for different patterns:
+- First fixations vs. subsequent fixations
+- Forward saccades vs. regressions
+- First pass vs. second pass
+- Different regions
+
+**Tip:** Save your label configuration for reuse across datasets!
+
+## Step 4: Generate BDF File
+
+Go to: **EyeSort → Generate BINLISTER BDF File**
+
+EyeSort will:
+- Scan all labeled events
+- Group them by condition and region
+- Generate a BINLISTER-compatible BDF file (default: `eyesort_bins.txt`)
+- Use your label descriptions for bin text
+
+This BDF file can be used with ERPLAB's `pop_binlister()` function.
+
+## Step 5: Save Dataset
+
+Go to: **EyeSort → Save Labeled Dataset**
+
+Choose a filename (e.g., `sample_eyesort_labeled.set`) and save.
+
+Your dataset now contains:
+- Original data + events
+- Labeled event codes
+- Region/pass/fixation metadata
+- Configuration information
+
+## Verify Your Work
+
+Open the saved dataset in EEGLAB and inspect the events:
+
+```matlab
+EEG = pop_loadset('sample_eyesort_labeled.set');
+% View first few events
+EEG.event(1:10)
+```
+
+You should see:
+- Event types with 6-digit codes (e.g., `011101`)
+- `original_type` field preserving original event names
+- `eyesort_*` fields with metadata
+
+## Next Steps
+
+Now that you've completed your first run:
+
+1. Try the full [Quickstart Tutorial](/tutorials/quickstart) with your own data
+2. Learn about [Interest Areas](/docs/concepts/interest-areas)
+3. Understand [Pass Structure](/docs/concepts/pass-structure)
+4. Explore [Batch Processing](/docs/workflows/batch-processing) for multiple files
+
+## Common First-Time Issues
+
+### "EEG data is not properly processed with region information"
+- You skipped Step 2 (Setup Interest Areas)
+- Run the Text IA setup first
+
+### "No labeled events found"
+- Your labeling criteria might be too strict
+- Try relaxing constraints (e.g., use "Any" for pass or fixation type)
+
+### Field name mismatches
+- Enable "Change default event field names" in Text IA GUI
+- Specify your dataset's exact field names
+
+

@@ -1,13 +1,49 @@
 // app/layout.tsx
 
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "EyeSort – Eye-tracking/EEG Toolbox",
+  title: "EyeSort – Region-aware eye-tracking event labeling for EEGLAB",
   description:
-    "EyeSort is a MATLAB-based EEGLAB toolbox for eye-tracking/EEG co-registration research.",
+    "EyeSort is an EEGLAB plugin that integrates text/pixel interest areas with synchronized eye-tracking events and builds robust, reproducible label codes for ERP binning.",
+  keywords: [
+    "EyeSort",
+    "EEGLAB",
+    "eye-tracking",
+    "ERP",
+    "ERPLAB",
+    "reading research",
+    "event labeling",
+    "interest areas",
+    "MATLAB",
+  ],
+  authors: [
+    { name: "Brandon Snyder" },
+    { name: "Sara Milligan" },
+    { name: "Elizabeth Schotter" },
+  ],
+  openGraph: {
+    title: "EyeSort – Region-aware eye-tracking event labeling for EEGLAB",
+    description:
+      "EEGLAB plugin for integrating eye-tracking events with EEG data for reading research",
+    url: "https://eyesort.usf.edu", // TODO: Update with actual domain
+    siteName: "EyeSort",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "EyeSort – Eye-tracking event labeling for EEGLAB",
+    description:
+      "EEGLAB plugin for integrating eye-tracking events with EEG data for reading research",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -17,29 +53,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-slate-950 text-slate-100">
-        <header className="border-b border-slate-800 bg-slate-950/80 backdrop-blur">
-          <nav className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-            <Link href="/" className="font-semibold text-lg">
-              EyeSort
-            </Link>
-            <div className="flex gap-4 text-sm">
-              <Link href="/docs" className="hover:text-sky-400">
-                Docs
-              </Link>
-              <Link href="/methods" className="hover:text-sky-400">
-                Methods
-              </Link>
-              <Link href="/resources" className="hover:text-sky-400">
-                Resources
-              </Link>
-              <Link href="/about" className="hover:text-sky-400">
-                About
-              </Link>
-            </div>
-          </nav>
-        </header>
-        <div>{children}</div>
+      <body className="bg-white text-slate-900 flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   );

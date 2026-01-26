@@ -1,0 +1,218 @@
+---
+title: Frequently Asked Questions
+description: Common questions about EyeSort
+lastUpdated: 2026-01-19
+---
+
+# Frequently Asked Questions
+
+## General Questions
+
+### What is EyeSort?
+
+EyeSort is an EEGLAB plugin for labeling eye-tracking events in synchronized EEG/eye-tracking datasets. It helps researchers systematically code fixations and saccades based on interest areas, reading passes, and other criteria for ERP analysis.
+
+### Is EyeSort free?
+
+Yes! EyeSort is open-source software released under the GNU GPL v3.0 license. You can use it freely for research and modify it as needed.
+
+### What kind of data does EyeSort work with?
+
+EyeSort requires:
+- EEGLAB `.set` datasets
+- Synchronized eye-tracking events already in `EEG.event`
+- Fixation and saccade events with position information
+
+Typically, data is pre-processed with tools like the EYE-EEG pipeline before using EyeSort.
+
+### Can I use EyeSort for non-reading studies?
+
+Yes! While EyeSort was designed for reading research, it can be used for any study with:
+- Defined spatial interest areas
+- Sequential visual processing patterns
+- Fixations and saccades that need systematic labeling
+
+## Technical Questions
+
+### What versions of MATLAB/EEGLAB do I need?
+
+- **MATLAB:** R2018b or later (tested up to R2023b)
+- **EEGLAB:** 2021.0 or later recommended
+
+### Does EyeSort modify my original data?
+
+EyeSort modifies event codes in your dataset. We recommend:
+- Working with copies of your data
+- Saving intermediate versions
+- Keeping original files as backups
+
+Original event types are preserved in the `original_type` field.
+
+### Can I use EyeSort with ERPLAB?
+
+Yes! EyeSort is designed to integrate with ERPLAB:
+- Generated BDF files work with `pop_binlister()`
+- Labeled event codes follow ERPLAB conventions
+- Workflows seamlessly transition to ERPLAB ERP processing
+
+### What eye-trackers are compatible?
+
+EyeSort works with any eye-tracker whose data has been synchronized into EEGLAB format. Commonly used systems include:
+- EyeLink (SR Research)
+- Tobii
+- SMI/iMotions
+- Others, as long as data is pre-processed into EEGLAB
+
+## Workflow Questions
+
+### Do I need to process eye-tracking data before using EyeSort?
+
+Yes. Before using EyeSort, your data should:
+1. Be synchronized (EEG + eye-tracking in one `.set` file)
+2. Have fixation and saccade events identified
+3. Have position information (X coordinates) for eye events
+
+Tools like EYE-EEG handle this preprocessing.
+
+### Can I process multiple datasets at once?
+
+Yes! EyeSort supports batch processing:
+1. Use "Batch Mode" in Step 1 (Load Datasets)
+2. Select input directory and output directory
+3. All subsequent steps process files one-by-one automatically
+
+### How do I share my analysis pipeline with collaborators?
+
+Save and share your configuration files:
+- Text IA config (`.mat` file from Step 2)
+- Label config (`.mat` file from Step 3)
+
+Collaborators can load these configs to replicate your exact analysis.
+
+### What if I need to change labels after generating a BDF?
+
+You can:
+1. Load the labeled dataset
+2. Add new labels (they'll get new label numbers)
+3. Regenerate the BDF file
+
+Or start from an unlabeled dataset and reapply all labels with updated criteria.
+
+## Interest Area Questions
+
+### What's the difference between text-based and pixel-based IAs?
+
+- **Text-based:** For reading studies where stimuli are text. EyeSort calculates pixel boundaries from character positions.
+- **Pixel-based:** For images or non-text stimuli. You specify exact pixel coordinates for each region.
+
+Currently, text-based IA is the primary supported method.
+
+### Can I have different numbers of regions per trial?
+
+The current version assumes a consistent region structure across trials. For variable structures, contact the development team or consider preprocessing into consistent formats.
+
+### What if my text uses variable-width fonts?
+
+EyeSort assumes fixed-width (monospace) fonts for accurate text-based IA calculation. Variable-width fonts may require pixel-based IA or custom preprocessing.
+
+## Labeling Questions
+
+### What is a "pass"?
+
+A **pass** refers to a sequential reading through a region:
+- **First pass:** The first time the reader enters a region
+- **Second pass:** After leaving and returning to a region
+- **Third+ pass:** Subsequent returns
+
+EyeSort tracks these automatically based on temporal order and region transitions.
+
+### What are the fixation type options?
+
+- **Single:** Only one fixation in the region during this pass
+- **First of Multiple:** First fixation when there are multiple
+- **Second:** Second fixation in the region
+- **Subsequent:** Third or later fixations
+- **Last in Region:** Final fixation before leaving the region
+
+### Can I label saccades instead of fixations?
+
+Yes! EyeSort labels both fixations and saccades. You can specify:
+- Saccade direction: Forward or Backward
+- Region constraints (where it comes from / goes to)
+
+### What do the 6-digit codes mean?
+
+Label codes follow the format: `CCRRLL`
+- `CC` = Condition code (2 digits)
+- `RR` = Region code (2 digits)
+- `LL` = Label number (01-99)
+
+Example: `021503` = Condition 02, Region 15, Label 03
+
+## Output Questions
+
+### What files does EyeSort create?
+
+- Labeled dataset: `.set`/`.fdt` files with updated event codes
+- BDF file: `eyesort_bins.txt` for ERPLAB
+- Optional intermediate: `*_eyesort_ia.set` after IA processing
+
+### Can I export results to other formats?
+
+The labeled `.set` files are standard EEGLAB format. You can:
+- Use EEGLAB's export functions
+- Access data programmatically in MATLAB
+- Export events to CSV/text files using EEGLAB tools
+
+### How do I use the BDF file in ERPLAB?
+
+In ERPLAB:
+1. Load your labeled dataset
+2. Use `pop_binlister()` and select your generated BDF
+3. Continue with standard ERPLAB ERP workflow
+
+## Troubleshooting Questions
+
+### Why am I getting "No labeled events found"?
+
+Common causes:
+- Labeling criteria too strict (try relaxing constraints)
+- Interest areas not set up (run Step 2 first)
+- Event field names don't match (customize in Text IA GUI)
+
+See [Troubleshooting](/docs/troubleshooting) for detailed solutions.
+
+### What if my region names have spaces or special characters?
+
+- Spaces in region names are fine
+- Avoid special characters like: `$`, `/`, `\`, `*`
+- Use underscores for multi-word names: `target_word`, `context_region`
+
+### Can I reprocess data with different labels?
+
+Yes. You can either:
+1. Start from the original unlabeled dataset
+2. Or add new labels to existing labeled data (label numbers increment)
+
+## Citation Questions
+
+### How do I cite EyeSort in my paper?
+
+See our [Papers & Citation](/papers) page for complete citation information in plain text and BibTeX formats.
+
+### Should I cite EEGLAB and ERPLAB too?
+
+Yes! EyeSort builds on these tools:
+- EEGLAB: [https://sccn.ucsd.edu/eeglab/](https://sccn.ucsd.edu/eeglab/)
+- ERPLAB: [https://erpinfo.org/](https://erpinfo.org/)
+
+Check their websites for current citation information.
+
+## Need More Help?
+
+- Browse the [Documentation](/docs)
+- Try our [Tutorials](/tutorials)
+- Check [Troubleshooting](/docs/troubleshooting)
+- [Contact us](/contact) or open a [GitHub Issue](https://github.com/emac-usf/EyeSort/issues)
+
+

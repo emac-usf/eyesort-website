@@ -1,0 +1,62 @@
+---
+title: Documentation Overview
+description: Complete guide to using EyeSort for eye-tracking event labeling in EEGLAB
+lastUpdated: 2026-01-19
+---
+
+# Documentation Overview
+
+Welcome to the EyeSort documentation. This guide will help you get started with EyeSort and master its features for analyzing eye-tracking data in your EEG/ERP studies.
+
+## What is EyeSort?
+
+EyeSort is an EEGLAB plugin that integrates text/pixel interest areas with synchronized eye-tracking events and builds robust, reproducible label codes for ERP binning. It provides a guided GUI workflow to:
+
+- Load one or many EEG `.set` datasets
+- Define interest areas (text-based sentences or pixel regions)
+- Label fixations and saccades with rich criteria (region, pass, fixation type, saccade direction)
+- Auto-generate BINLISTER Bin Descriptor Files (BDF) from labeled codes
+- Save labeled datasets for downstream ERP workflows
+
+## Quick Links
+
+- **New to EyeSort?** Start with [Installation](/docs/installation) and [First Run](/docs/first-run)
+- **Ready to analyze?** Check out our [Tutorials](/tutorials)
+- **Need help?** See [Troubleshooting](/docs/troubleshooting) or [Contact](/contact)
+- **Want sample data?** Download from our [Datasets](/datasets) page
+
+## Requirements
+
+Before using EyeSort, ensure you have:
+
+- **MATLAB** and **EEGLAB** installed (EyeSort is an EEGLAB plugin)
+- **Synchronized eye-tracking + EEG datasets** where fixation and saccade events exist in `EEG.event`
+  - Defaults assume: `R_fixation`, `R_saccade`, `fix_avgpos_x`, `sac_startpos_x`, `sac_endpos_x`
+  - All field names are customizable in the GUI
+
+## Documentation Structure
+
+### Getting Started
+Learn the basics of installing and running EyeSort for the first time.
+
+### Core Concepts
+Understand the key concepts behind EyeSort's labeling system, including interest areas, passes, and fixation types.
+
+### Workflows
+Step-by-step guides for common EyeSort operations.
+
+### Reference
+Detailed technical reference for configuration files, label codes, and GUI options.
+
+### Help
+Troubleshooting tips and frequently asked questions.
+
+## Contributing
+
+EyeSort is open-source software. If you find issues or have suggestions, please:
+
+- Report bugs on [GitHub Issues](https://github.com/emac-usf/EyeSort/issues)
+- Contribute improvements via pull requests
+- Join discussions on [GitHub Discussions](https://github.com/emac-usf/EyeSort/discussions)
+
+

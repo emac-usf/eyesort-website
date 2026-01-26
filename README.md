@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EyeSort Website
 
-## Getting Started
+Official documentation and resource website for EyeSort, an EEGLAB plugin for region-aware eye-tracking event labeling.
 
-First, run the development server:
+**Live Site:** [Coming Soon]  
+**Plugin Repository:** https://github.com/emac-usf/EyeSort  
+**Maintained by:** Eye Movements & Cognition Lab, University of South Florida
+
+---
+
+## About
+
+This repository contains the source code for the EyeSort documentation website. The site provides:
+
+- Installation and usage documentation
+- Tutorials and quickstart guides
+- Release notes and version history
+- Research papers and datasets
+- Contact information and support resources
+
+---
+
+## Development
+
+### Prerequisites
+
+- Node.js 18+ and npm
+
+### Getting Started
 
 ```bash
+# Clone the repository
+git clone https://github.com/emac-usf/eyesort-website.git
+cd eyesort-website
+
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Building for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Technology Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Framework:** Next.js 16.1.0 with App Router
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4
+- **Content:** MDX for documentation
+- **Deployment:** Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This website is maintained by the Eye Movements & Cognition Lab at the University of South Florida.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For bug reports, content suggestions, or contributions:
+- Open an issue: https://github.com/emac-usf/eyesort-website/issues
+- Contact: smilliga@usf.edu
+
+---
+
+## License
+
+- **Website Code:** MIT License
+- **Documentation Content:** CC BY 4.0
+- **EyeSort Plugin:** GPL-3.0-or-later (see [main repository](https://github.com/emac-usf/EyeSort))
+
+---
+
+**Questions?** Visit the website or contact the Eye Movements & Cognition Lab at USF.
