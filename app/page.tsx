@@ -1,7 +1,10 @@
 import Link from "next/link";
-import { LINKS, CURRENT_VERSION } from "@/lib/links";
+import { LINKS } from "@/lib/links";
+import { getLatestVersion } from "@/lib/version";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const version = await getLatestVersion();
+
   return (
     <main className="min-h-screen bg-white text-slate-900">
       {/* Hero Section */}
@@ -23,7 +26,7 @@ export default function HomePage() {
                 href={LINKS.latestRelease}
                 className="px-6 py-3 rounded-lg bg-sky-600 hover:bg-sky-700 transition font-semibold text-white shadow-lg"
               >
-                Download v{CURRENT_VERSION}
+                Download v{version}
               </a>
               <Link
                 href="/docs"
@@ -176,7 +179,7 @@ export default function HomePage() {
             <div className="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
               <h3 className="text-xl font-semibold mb-4 text-slate-900">Latest Release</h3>
               <p className="text-slate-700 mb-4">
-                Download EyeSort v{CURRENT_VERSION} from GitHub Releases
+                Download EyeSort v{version} from GitHub Releases
               </p>
               <a
                 href={LINKS.latestRelease}
@@ -185,7 +188,7 @@ export default function HomePage() {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
-                Download v{CURRENT_VERSION}
+                Download v{version}
               </a>
             </div>
             <div className="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
@@ -251,21 +254,7 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-4 py-16">
           <h2 className="text-3xl font-bold mb-6 text-slate-900">How to Cite</h2>
           <div className="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-            <p className="text-slate-700 mb-4">
-              If you use EyeSort in your research, please cite:
-            </p>
-            <div className="p-4 bg-slate-50 border border-slate-200 rounded-lg mb-4 font-mono text-sm text-slate-800">
-              Snyder, B., Milligan, S., & Schotter, E. (2025). EyeSort: Region-aware
-              eye-tracking event labeling for EEGLAB (Version {CURRENT_VERSION}) [Computer software].
-              Eye Movements & Cognition Lab, University of South Florida.
-              {LINKS.githubRepo}
-            </div>
-            <Link
-              href="/papers"
-              className="inline-flex items-center text-sky-600 hover:text-sky-700 font-medium"
-            >
-              View BibTeX and more citation formats →
-            </Link>
+            <p className="text-slate-700">Waiting on publication</p>
           </div>
         </div>
       </section>
