@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LINKS, CURRENT_VERSION } from "@/lib/links";
+import { LINKS } from "@/lib/links";
 
 const NAV = [
   { href: "/", label: "Home" },
@@ -15,7 +15,7 @@ const NAV = [
   { href: "/contact", label: "Contact" },
 ];
 
-export function Navbar() {
+export function Navbar({ version }: { version: string }) {
   const pathname = usePathname();
 
   return (
@@ -26,7 +26,7 @@ export function Navbar() {
             EyeSort
           </Link>
           <span className="rounded bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-700 border border-slate-200">
-            v{CURRENT_VERSION}
+            v{version}
           </span>
         </div>
 

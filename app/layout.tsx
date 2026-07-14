@@ -3,6 +3,7 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { getLatestVersion } from "@/lib/version";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -44,17 +45,22 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: [{ url: "/favicon-v2.ico", type: "image/x-icon" }],
+  },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const version = await getLatestVersion();
+
   return (
     <html lang="en">
       <body className="bg-white text-slate-900 flex flex-col min-h-screen">
-        <Navbar />
+        <Navbar version={version} />
         <main className="flex-1">{children}</main>
         <Footer />
       </body>

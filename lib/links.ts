@@ -12,8 +12,6 @@ export const LINKS = {
   labWebsite: "https://emac-usf.com",
 };
 
-export const CURRENT_VERSION = "0.4.9";
-
 export const AUTHORS = [
   { name: "Brandon Snyder", email: "snyderb96@gmail.com" },
   { name: "Dr. Sara Milligan", email: "smilliga@usf.edu" },

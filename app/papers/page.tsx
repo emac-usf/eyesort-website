@@ -13,45 +13,13 @@ export default function PapersPage() {
           Papers & Citation
         </h1>
         <p className="text-lg text-slate-600">
-          If you use EyeSort in your research, please cite it as follows
+          Citation information for EyeSort
         </p>
       </header>
 
       <section className="mb-12">
         <h2 className="text-2xl font-semibold text-slate-900 mb-4">How to Cite</h2>
-        
-        <div className="mb-6">
-          <h3 className="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-3">
-            Plain Text
-          </h3>
-          <div className="p-4 bg-slate-50 border border-slate-200 rounded-lg">
-            <p className="text-slate-900 font-mono text-sm leading-relaxed">
-              Snyder, B., Milligan, S., & Schotter, E. (2025). EyeSort: Region-aware
-              eye-tracking event labeling for EEGLAB (Version 0.4.9) [Computer software].
-              Eye Movements & Cognition Lab, University of South Florida.
-              https://github.com/emac-usf/EyeSort
-            </p>
-          </div>
-        </div>
-
-        <div className="mb-6">
-          <h3 className="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-3">
-            BibTeX
-          </h3>
-          <div className="p-4 bg-slate-50 border border-slate-200 rounded-lg">
-            <pre className="text-slate-900 font-mono text-sm overflow-x-auto">
-{`@software{eyesort2025,
-  author = {Snyder, Brandon and Milligan, Sara and Schotter, Elizabeth},
-  title = {{EyeSort}: Region-aware eye-tracking event labeling for {EEGLAB}},
-  year = {2025},
-  version = {0.4.9},
-  organization = {Eye Movements \\& Cognition Lab, University of South Florida},
-  url = {https://github.com/emac-usf/EyeSort},
-  note = {GPL-3.0-or-later}
-}`}
-            </pre>
-          </div>
-        </div>
+        <p className="text-slate-700">Waiting on publication</p>
       </section>
 
       <section className="mb-12">
@@ -60,7 +28,7 @@ export default function PapersPage() {
         </h2>
         <div className="p-6 bg-white border border-slate-200 rounded-lg shadow-sm">
           <p className="text-slate-700 mb-4">
-            For technical details about EyeSort's methodology, labeling system, and
+            For technical details about EyeSort&apos;s methodology, labeling system, and
             validation, please refer to our documentation and the EyeSort User Manual.
           </p>
           <div className="flex gap-4">
@@ -87,6 +55,29 @@ export default function PapersPage() {
           Related Publications
         </h2>
         <div className="space-y-6">
+          <div className="p-6 bg-white border border-slate-200 rounded-lg shadow-sm">
+            <h3 className="text-lg font-semibold text-slate-900 mb-2">
+              Looking inside and beyond eye fixations in reading
+            </h3>
+            <p className="text-slate-600 mb-1">
+              Schotter, E. R., & Payne, B. R. (2026)
+            </p>
+            <p className="text-slate-500 text-sm mb-4">
+              Trends in Cognitive Sciences
+            </p>
+            <a
+              href="https://www.sciencedirect.com/science/article/abs/pii/S1364661326000343"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white font-medium rounded-lg transition-colors shadow-sm"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+              View on ScienceDirect
+            </a>
+          </div>
+
           <div className="p-6 bg-white border border-slate-200 rounded-lg shadow-sm">
             <h3 className="text-lg font-semibold text-slate-900 mb-2">
               EyeSort: An EEGLAB-integrated toolbox for behavioral categorization of eye fixation events in EEG-EM co-registered data
@@ -146,4 +137,3 @@ export default function PapersPage() {
     </div>
   );
 }
-
