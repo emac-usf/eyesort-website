@@ -1,0 +1,34 @@
+---
+title: Diagnostics, Warnings, and Conflict Policy
+description: Interpret EyeSort’s preflight, assignment, import, labeling, BDF, and conflict diagnostics.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - warnings
+  - zero matches
+  - conflict policy
+---
+
+## Step 2 preflight and assignment
+
+Trigger validation checks configured trial, condition, item, and optional stimulus-window markers. Assignment diagnostics then report event-trigger matches, complete keys, missing/unused condition–item keys, boundaries assigned, fixation/saccade events seen, mapped fixations, missing X fields, and invalid X values.
+
+Zero assigned boundaries is an error. Sparse fixation assignment is a warning that requires checking geometry and source coordinates.
+
+## Step 3 import
+
+`eyesort_import_diagnostics` records valid/invalid IA rows and event keys, assigned events, matched keys, missing keys, and unused rows. Imported fields can be empty when the join key is absent.
+
+## Step 4 labels
+
+`eyesort_last_label_diagnostics` starts from fixation candidates and counts drops by condition, item, time-locked region, pass, previous/next region, fixation class, saccade in/out, and existing-label conflict. A zero-match label should be broadened one criterion at a time.
+
+## Conflict policy
+
+Existing EyeSort labels are not overwritten silently. “Replace” changes canonical and display fields; “Keep existing” skips the new label for those events. Save or script the policy.
+
+## BDF and conversion
+
+“No labeled events” means no usable canonical codes were found in the selected source. Conversion requires at least one nonempty `eyesort_full_code`; restoring originals additionally requires `original_type`.
+
+Use [troubleshooting by step](/docs/help/troubleshooting) for corrective actions.

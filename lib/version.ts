@@ -1,19 +1,6 @@
-const FALLBACK_VERSION = "0.5.1";
+import { RELEASE } from "./site";
 
-/** Latest EyeSort release tag from GitHub (cached 1h). */
+/** Stable release displayed across the site. Updated with each verified release. */
 export async function getLatestVersion(): Promise<string> {
-  try {
-    const res = await fetch(
-      "https://api.github.com/repos/emac-usf/EyeSort/releases/latest",
-      {
-        headers: { Accept: "application/vnd.github+json" },
-        next: { revalidate: 3600 },
-      }
-    );
-    if (!res.ok) return FALLBACK_VERSION;
-    const data = (await res.json()) as { tag_name?: string };
-    return (data.tag_name ?? FALLBACK_VERSION).replace(/^v/i, "");
-  } catch {
-    return FALLBACK_VERSION;
-  }
+  return RELEASE.version;
 }

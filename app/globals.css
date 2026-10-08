@@ -1,5 +1,30 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
+:focus-visible {
+  outline: 3px solid #0284c7;
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -5rem;
+  z-index: 100;
+  border-radius: 0.5rem;
+  background: #0f172a;
+  color: white;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
 /* Prose styles for MDX content */
 .prose {
   color: #475569;
@@ -22,6 +47,7 @@
   margin-top: 2em;
   margin-bottom: 1em;
   line-height: 1.3333333;
+  scroll-margin-top: 6rem;
 }
 
 .prose h3 {
@@ -31,6 +57,7 @@
   margin-top: 1.6em;
   margin-bottom: 0.6em;
   line-height: 1.6;
+  scroll-margin-top: 6rem;
 }
 
 .prose p {
@@ -40,7 +67,7 @@
 }
 
 .prose a {
-  color: #0284c7;
+  color: #0369a1;
   text-decoration: underline;
   font-weight: 500;
 }
@@ -107,7 +134,10 @@
 }
 
 .prose table {
+  display: block;
   width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
   border-collapse: collapse;
   margin-top: 2em;
   margin-bottom: 2em;
@@ -145,4 +175,118 @@
 
 .prose .anchor:hover {
   text-decoration: underline;
+}
+
+.docs-callout {
+  margin: 1.5rem 0;
+  border-left: 4px solid #64748b;
+  border-radius: 0.5rem;
+  background: #f8fafc;
+  padding: 1rem 1.25rem;
+}
+
+.docs-callout-prerequisite {
+  border-color: #7c3aed;
+  background: #f5f3ff;
+}
+
+.docs-callout-warning {
+  border-color: #d97706;
+  background: #fffbeb;
+}
+
+.docs-callout-output {
+  border-color: #059669;
+  background: #ecfdf5;
+}
+
+.docs-callout-validation {
+  border-color: #0284c7;
+  background: #f0f9ff;
+}
+
+.docs-callout-title {
+  margin: 0 0 0.35rem !important;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.docs-callout > div > :first-child {
+  margin-top: 0;
+}
+
+.docs-callout > div > :last-child {
+  margin-bottom: 0;
+}
+
+.docs-code-block {
+  position: relative;
+}
+
+.docs-copy-button {
+  position: absolute;
+  right: 0.6rem;
+  top: 0.6rem;
+  z-index: 1;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.35rem;
+  background: white;
+  color: #334155;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.docs-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.docs-search-dialog {
+  position: fixed;
+  inset: 12vh auto auto 50%;
+  width: min(42rem, calc(100vw - 2rem));
+  max-width: none;
+  transform: translateX(-50%);
+  border: 0;
+  border-radius: 0.75rem;
+  padding: 0;
+}
+
+.docs-search-dialog::backdrop {
+  background: rgb(15 23 42 / 55%);
+  backdrop-filter: blur(2px);
+}
+
+/* Accessible overrides for Tailwind's brighter default sky palette. */
+.bg-sky-500,
+.bg-sky-600 {
+  background-color: #0369a1;
+}
+
+.hover\:bg-sky-400:hover,
+.hover\:bg-sky-700:hover {
+  background-color: #075985;
+}
+
+.text-sky-600 {
+  color: #0369a1;
+}
+
+.text-slate-500 {
+  color: #475569;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

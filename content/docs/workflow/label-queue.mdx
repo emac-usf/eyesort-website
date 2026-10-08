@@ -1,0 +1,43 @@
+---
+title: Build and Apply a Label Queue
+description: Define ordered fixation-label criteria, resolve conflicts, and auto-save processed outputs.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - Step 4
+  - label queue
+  - fixation labels
+---
+
+## Define labels
+
+Open **EyeSort → 4. Eye-Tracking Event Labeling**. For each label:
+
+1. write a clear label description;
+2. choose the event-marker display format;
+3. select at least one time-locked region;
+4. add only the needed pass, previous/next region, fixation-type, and saccade-direction filters;
+5. click **Add Label to Queue**.
+
+Unchecked optional criteria mean “any.” Review the order because `LL` in the canonical code follows the applied label number.
+
+## Save and apply
+
+Save the full queue as a `.mat` file, then click **Apply All & Finish**. EyeSort applies labels sequentially to fixation candidates and reports matched counts and the filters that removed candidates.
+
+If an event already has `eyesort_full_code`, EyeSort does not silently overwrite it. Choose **replace** or **keep existing**; you may apply that decision to future conflicts in the run.
+
+## Expected result
+
+EyeSort automatically writes `<base>_processed.set/.fdt` to the Step 1 output directory. It can also write `eyesort_labeling_summary_NNN.csv`, including TOTAL rows. There is no separate save-labeled-dataset step.
+
+Verify:
+
+```matlab
+labeled = ~cellfun(@isempty, {EEG.event.eyesort_full_code});
+nnz(labeled)
+unique({EEG.event(labeled).bdf_full_description})
+EEG.eyesort_last_label_diagnostics
+```
+
+Labels apply only to fixation events. Saccade direction is contextual filtering. Next: [choose or convert event formats](/docs/workflow/event-formats).

@@ -1,0 +1,33 @@
+---
+title: Output Files and Directory Behavior
+description: Names, locations, sidecars, and overwrite behavior for EyeSort 1.0 outputs.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - outputs
+  - filenames
+  - directories
+---
+
+## Dataset outputs
+
+- `<base>_eyesort_ia.set/.fdt`: optional Step 2 intermediate in the directory chosen with **Save Intermediate Dataset(s)**.
+- `<base>_processed.set/.fdt`: final labeled dataset auto-saved after Step 4 to the required Step 1 output directory.
+
+Two-file EEGLAB saving produces both `.set` and `.fdt` where applicable. Keep each pair together.
+
+## Summaries and BDF
+
+- `eyesort_labeling_summary_NNN.csv`: next available numbered summary. Columns are `Dataset,FullDescription,TrialCount`; appended `TOTAL` rows aggregate descriptions.
+- `eyesort_bins.txt`: default user-selectable BINLISTER descriptor filename.
+- parsed-region QC export: user-selected `.csv` or tab-delimited `.txt`.
+
+## Configuration and script artifacts
+
+Manual text-IA and label-queue saves use user-selected `.mat` names. Convenience caches include `cache/last_text_ia_config.mat`, `cache/last_label_queue.mat`, and session state.
+
+Script export defaults to `eyesort_processing_script.m` and creates name-based text-IA config, label-queue, and localized IA-file sidecars beside it.
+
+## Directory behavior
+
+GUI batch inputs must share one directory. Step 2 batch temporaries use the system temp directory and are removed after final labeling. Batch event-format conversion saves each processed dataset in place; single-dataset GUI conversion updates the active `EEG` in MATLAB without automatically saving it. Keep original synchronized datasets read-only and write EyeSort outputs elsewhere.

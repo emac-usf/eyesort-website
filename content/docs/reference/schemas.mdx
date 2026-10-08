@@ -1,0 +1,37 @@
+---
+title: Text IA and Label-Config Schemas
+description: Required IA columns and saved configuration fields used by EyeSort 1.0.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - schema
+  - configuration
+  - MAT files
+---
+
+## Text IA table
+
+Required logical columns are:
+
+- condition numeric key;
+- item numeric key;
+- one or more descriptive condition-label columns;
+- one literal-text column per ordered region.
+
+Optional columns can be imported after mapping. Files are parsed as tab-delimited tables with original headers preserved. Region, condition, item, and descriptive columns are validated; region matching tolerates case differences and a leading `$`.
+
+## Text-IA configuration
+
+A saved config contains `txtFileList`, `offset`, `pxPerChar`, `numRegions`, `regionNames`, `conditionTypeColName`, `conditionColName`, `itemColName`, trial/stimulus codes, `condTriggers`, `itemTriggers`, the five eye-event field names, `useSentenceCodes`, and `rtl`.
+
+EyeSort auto-caches `cache/last_text_ia_config.mat`. Manually save a study copy.
+
+## Label configuration
+
+Each label struct records `selectedRegions`, three pass flags, `selectedPrevRegions`, `selectedNextRegions`, five fixation flags, four saccade-direction flags, `labelDescription`, `eventFormat`, and `availableRegions`.
+
+A full queue is a cell array of those structs, applied in order. The convenience cache is `cache/last_label_queue.mat`.
+
+## Compatibility
+
+Loading a label config against different `region_names` produces a warning. Review pre-1.0 configs in the GUI; never assume a cached config documents version, source IA file, or conflict policy by itself.

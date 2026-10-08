@@ -1,0 +1,45 @@
+---
+title: Install and Upgrade
+description: Install the EyeSort 1.0 release in EEGLAB and verify the plugin version and menu.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - installation
+  - upgrade
+  - eyesort1.0
+---
+
+## Install the 1.0 release
+
+1. Download [`eyesort1.0.zip`](https://github.com/emac-usf/EyeSort/releases/download/v1.0/eyesort1.0.zip).
+2. Unzip it.
+3. Place the resulting **`eyesort1.0` folder directly inside EEGLAB’s `plugins` directory**.
+4. Restart MATLAB and launch EEGLAB with `eeglab`.
+
+The key path should be:
+
+```text
+eeglab/plugins/eyesort1.0/eegplugin_eyesort.m
+```
+
+Do not leave an extra archive directory around that folder. A source clone is different: cloning the repository can produce a folder named `EyeSort`, which is acceptable when `eegplugin_eyesort.m` is directly inside it.
+
+## Verify the installation
+
+In MATLAB:
+
+```matlab
+which eegplugin_eyesort -all
+```
+
+Expect one intended plugin path. Start EEGLAB and open **EyeSort**. The menu should report **EyeSort v1.0** and contain Steps 1–4, BDF generation, event-code conversion, History Scripts, and Help.
+
+## Upgrade safely
+
+Close EEGLAB, remove or archive the previous plugin folder, install the new release folder, and restart. Avoid keeping multiple EyeSort versions on the MATLAB path.
+
+Keep publication configurations outside the plugin directory. The plugin’s `cache` stores convenience copies such as `last_text_ia_config.mat` and `last_label_queue.mat`; these are not a substitute for manually saved, versioned study files and may disappear when replacing the plugin.
+
+Pre-1.0 configurations should be reviewed in the 1.0 GUI before batch use. Verify region names, trigger lists, field names, event format, and every queued label on one representative dataset.
+
+Next: [run the sample workflow](/docs/start-here/first-run).

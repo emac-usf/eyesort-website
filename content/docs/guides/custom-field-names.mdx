@@ -1,0 +1,40 @@
+---
+title: Custom EYE-EEG Field Names
+description: Map local fixation and saccade event conventions to EyeSort’s configurable inputs.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - custom fields
+  - EYE-EEG
+  - event names
+---
+
+## Inspect local conventions
+
+EyeSort defaults to `R_fixation`, `fix_avgpos_x`, `R_saccade`, `sac_startpos_x`, and `sac_endpos_x`. To identify alternatives:
+
+```matlab
+fieldnames(EEG.event)
+types = string({EEG.event.type});
+EEG.event(find(types == "YOUR_FIXATION", 1))
+EEG.event(find(types == "YOUR_SACCADE", 1))
+```
+
+## Configure Step 2
+
+Check **Change default event field names** and enter all five names exactly. The fixation and saccade type tests use the configured type as a prefix in core mapping; choose a value that identifies the intended events without catching unrelated markers.
+
+X positions must be numeric or text that MATLAB can convert. Saccade direction requires both start and end X fields. EyeSort ignores Y coordinates.
+
+## Verify persistence
+
+After Step 2:
+
+```matlab
+EEG.eyesort_field_names
+EEG.eyesort_step2_diagnostics.fixation_events_seen
+EEG.eyesort_step2_diagnostics.saccade_events_seen
+EEG.eyesort_step2_diagnostics.missing_x_field_events
+```
+
+Save the text-IA configuration so every participant and collaborator uses the same mapping. If fields differ between participants, normalize upstream or process homogeneous subsets separately.

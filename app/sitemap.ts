@@ -1,14 +1,17 @@
 import { MetadataRoute } from "next";
 import { getAllMdxMetadata } from "@/lib/mdx";
+import { RELEASE, SITE } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://eyesort.usf.edu"; // TODO: Update with actual domain
+  const baseUrl = SITE.url;
+  const releaseDate = new Date(RELEASE.published);
 
   // Static routes
   const staticRoutes = [
     "",
     "/docs",
     "/tutorials",
+    "/resources",
     "/datasets",
     "/papers",
     "/news",
@@ -16,7 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact",
   ].map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified: new Date(),
+    lastModified: releaseDate,
     changeFrequency: "weekly" as const,
     priority: route === "" ? 1 : 0.8,
   }));
@@ -26,7 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((doc) => doc.slug !== "index")
     .map((doc) => ({
       url: `${baseUrl}${doc.href}`,
-      lastModified: new Date(),
+      lastModified: new Date(String(doc.frontmatter.lastUpdated ?? RELEASE.published)),
       changeFrequency: "monthly" as const,
       priority: 0.7,
     }));
@@ -36,7 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((tutorial) => tutorial.slug !== "index")
     .map((tutorial) => ({
       url: `${baseUrl}${tutorial.href}`,
-      lastModified: new Date(),
+      lastModified: new Date(String(tutorial.frontmatter.lastUpdated ?? tutorial.frontmatter.date ?? RELEASE.published)),
       changeFrequency: "monthly" as const,
       priority: 0.7,
     }));
@@ -46,7 +49,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((post) => post.slug !== "index")
     .map((post) => ({
       url: `${baseUrl}${post.href}`,
-      lastModified: new Date(),
+      lastModified: new Date(String(post.frontmatter.lastUpdated ?? post.frontmatter.date ?? RELEASE.published)),
       changeFrequency: "monthly" as const,
       priority: 0.6,
     }));

@@ -1,0 +1,41 @@
+---
+title: Inspect Parsed Regions and QC Results
+description: Validate region text, boundaries, trigger matches, and fixation assignments before labeling.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - quality control
+  - Inspect Parsed Regions
+  - diagnostics
+---
+
+## Inspect the reconstructed stimuli
+
+After Step 2, choose **EyeSort → 2. Setup Interest Areas → Inspect Parsed Regions**. Select a processed dataset if prompted. The read-only table shows one row per condition–item combination and two columns per region: literal text and `[start, end]` pixel boundaries.
+
+Check examples from every condition and stimulus family. Verify that:
+
+- region text is in the intended column and order;
+- spaces appear where expected;
+- boundaries advance by the correct character widths;
+- the first boundary starts at the measured offset;
+- right-to-left boundaries proceed in the expected screen direction.
+
+Export the table to CSV or tab-delimited text and retain it with analysis records.
+
+## Read Step 2 diagnostics
+
+Inspect `EEG.eyesort_step2_diagnostics` for matched trial/condition/item triggers, complete condition–item keys, assigned boundaries, fixation/saccade counts, missing text keys, missing or invalid X values, and fixations assigned to regions.
+
+```matlab
+d = EEG.eyesort_step2_diagnostics;
+[d.assigned_boundary_events d.fixations_assigned_to_region]
+d.missing_text_file_keys
+d.unused_text_file_keys
+```
+
+## Stop conditions
+
+Do not continue when zero boundaries were assigned, fixation-region assignments are unexpectedly sparse, or condition–item keys disagree. Correct trigger formatting, IA keys, X-field names, offset, character width, region order, or reading direction and rerun Step 2.
+
+Next: optionally [import IA columns](/docs/workflow/import-ia-columns), then [build a label queue](/docs/workflow/label-queue).

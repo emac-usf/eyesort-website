@@ -1,0 +1,37 @@
+---
+title: GUI Field Reference
+description: Defaults, meanings, and validation rules for the EyeSort 1.0 dialogs.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - GUI defaults
+  - field reference
+---
+
+## Step 1
+
+**Dataset(s):** one or more `.set` files from one directory. One file is interactive mode; multiple files are batch mode.  
+**Output directory:** required existing destination for `*_processed.set/.fdt` and summaries.
+
+## Step 2: Global Study Parameters
+
+**IA file:** tab-delimited text; `.txt` and `.csv` are selectable, but parsing uses tab delimiter.  
+**Right-to-left:** default off.  
+**Sentence offset / pixels per character:** required study measurements; GUI shows example placeholders `281` and `14`.  
+**Number of regions / names:** required positive integer and same-length comma-separated list; placeholder 4 and `Beginning, PreTarget, Target_word, Ending`.  
+**Condition label column(s):** required descriptive BDF text; comma-separated. Placeholder `condition`.  
+**Condition/item code columns:** required numeric key columns; placeholders `trigcondition`, `trigitem`.  
+**Trial start/end:** required; placeholders `S254`, `S255`.  
+**Eye-event window:** optional; placeholders `S250`, `S251`.  
+**Condition/item triggers:** required; item ranges are supported.  
+**Eye fields:** defaults `R_fixation`, `fix_avgpos_x`, `R_saccade`, `sac_startpos_x`, `sac_endpos_x`.
+
+## Step 4
+
+**Label description:** required and used in BDF/summaries.  
+**Event marker format:** numeric, description, description+word, description+index, region content, or original.  
+**Time-locked region:** at least one required.  
+**Pass, previous/next region, fixation type, saccade in/out:** optional; no selection means any.  
+**Queue controls:** add, remove, save/load, then **Apply All & Finish**.
+
+See [label semantics](/docs/concepts/passes-fixations) and [event formats](/docs/workflow/event-formats).

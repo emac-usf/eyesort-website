@@ -1,0 +1,31 @@
+---
+title: Previous/Next Region and Saccade Criteria
+description: Distinguish region-sequence context from incoming and outgoing saccade direction.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - previous region
+  - next region
+  - saccade direction
+---
+
+## Different-region context
+
+Label criteria named **Previous Region** and **Next Region** use the previous and next *different* region visited, stored as `last_region_visited` and `next_region_visited`. Consecutive fixations within the same region do not change these values.
+
+For immediate fixation adjacency, inspect `previous_fixation_region` and `next_fixation_region`. These fields are informative but are not the GUI’s previous/next different-region filters.
+
+## Saccade direction
+
+EyeSort finds the nearest preceding or following configured saccade within the trial and computes end-X minus start-X. Forward is positive for left-to-right and negative for right-to-left.
+
+The 1.0 code uses hidden minimum amplitudes:
+
+- incoming direction requires absolute movement greater than **5 px**;
+- outgoing direction requires absolute movement greater than **10 px**.
+
+A missing qualifying saccade causes a selected direction filter to fail. Leaving both direction boxes unchecked means any direction and does not require the threshold.
+
+## Labels remain fixation-only
+
+These criteria decide whether a fixation candidate is labeled; they do not assign codes to the saccade event. Report direction criteria and thresholds when they affect inclusion.

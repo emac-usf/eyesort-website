@@ -1,0 +1,55 @@
+---
+title: Troubleshooting by Pipeline Step
+description: Resolve installation, trigger, mapping, import, labeling, BDF, and output problems in EyeSort 1.0.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - troubleshooting
+  - errors
+  - no labeled events
+---
+
+## Installation
+
+**No EyeSort menu:** confirm `eegplugin_eyesort.m` is directly inside the release folder under `eeglab/plugins`, restart EEGLAB, and run `which eegplugin_eyesort -all`. Remove duplicate paths.
+
+**Step 2 disabled:** complete Step 1 with a usable dataset or batch reference file.
+
+## Step 2 mapping
+
+**Trigger validation fails:** inspect `unique(string({EEG.event.type}))`; correct trial, condition, item, and optional stimulus codes.
+
+**Missing region/condition column:** compare the IA header with GUI names. Region matching tolerates case and a leading `$`, but spelling and region count must still agree.
+
+**No boundaries assigned:** compare `condition_number`/`item_number` keys with numeric IA values and inspect `missing_text_file_keys`.
+
+**Fixations lack regions:** verify `fix_avgpos_x` or the custom X field, numeric values, sentence offset, character width, whitespace, direction, and parsed boundaries.
+
+```matlab
+d = EEG.eyesort_step2_diagnostics;
+[d.fixation_events_seen d.fixations_assigned_to_region ...
+ d.missing_x_field_events d.invalid_x_position_events]
+```
+
+## Steps 3 and 4
+
+**Imported columns empty:** inspect `EEG.eyesort_import_diagnostics.missing_keys`.
+
+**Zero-match label:** inspect `EEG.eyesort_last_label_diagnostics`; start with region only, then add one filter at a time. Verify exact fields:
+
+```matlab
+{EEG.event.current_region}
+[EEG.event.region_pass_number]
+[EEG.event.fixation_in_pass]
+[EEG.event.is_last_in_pass]
+```
+
+**Unexpected overwrite prompt:** criteria overlap an existing EyeSort label. Choose and document replace/keep.
+
+## Outputs
+
+**Missing processed dataset:** check the Step 1 output directory and MATLAB warnings. The expected name is `*_processed.set`, not a manually chosen label filename.
+
+**BDF empty/no labels:** confirm nonempty `eyesort_full_code` and `bdf_label_description` in processed files. Convert `type` to numeric before BINLISTER.
+
+If unresolved, [report a reproducible issue](/docs/help/reproducible-issue).

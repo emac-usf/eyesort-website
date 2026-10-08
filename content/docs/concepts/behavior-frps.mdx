@@ -1,0 +1,28 @@
+---
+title: Behavior-Contingent FRPs and Temporal Overlap
+description: What EyeSort’s behavioral labels support—and what they do not infer or correct.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - FRP
+  - temporal overlap
+  - deconvolution
+---
+
+## Why behavioral context matters
+
+Neural responses time-locked to a fixation may differ according to how gaze arrived, whether a region was skipped or reread, and where gaze moved next. EyeSort makes those distinctions explicit so researchers can define reproducible fixation classes rather than collapsing all fixations on a region.
+
+## What EyeSort provides
+
+EyeSort provides deterministic region, pass, fixation-position, regression, and sequence metadata plus hypothesis-driven labels. These can define ERP/FRP bins, grouping variables, or predictors in single-event and deconvolution models.
+
+## What EyeSort does not infer
+
+A label identifies an observed behavioral pattern; it does not establish a cognitive process or causal interpretation. EyeSort does not remove ocular artifacts, estimate missing gaze, detect fixations, or isolate the neural response unique to a fixation.
+
+Closely spaced fixations produce temporally overlapping neural activity. EyeSort does not solve that convolution. Researchers must choose averaging, regression, or deconvolution methods appropriate to their design and evaluate behavioral covariates such as fixation duration and saccade amplitude.
+
+## Specificity versus power
+
+Narrow criteria improve behavioral specificity but reduce event counts, often unevenly across participants and items. Plan for the expected prevalence of the behavior, inspect post-EyeSort counts, and report their distribution—not just aggregate retained trials.

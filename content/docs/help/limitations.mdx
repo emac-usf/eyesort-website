@@ -1,0 +1,35 @@
+---
+title: Compatibility and Known Limitations
+description: The verified design envelope and analysis limitations of EyeSort 1.0.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - compatibility
+  - limitations
+  - known issues
+---
+
+## Supported design envelope
+
+EyeSort 1.0 targets synchronized continuous EEGLAB `.set` data from single-line reading studies using fixed-width text, uniform pixels per character, and a consistent named-region schema. It uses horizontal X position only.
+
+Upstream field names are configurable, so compatibility is determined by the event contract rather than eye-tracker brand. The project developed with common EYE-EEG conventions, but EYE-EEG is not required if equivalent events exist.
+
+## Not supported or not performed
+
+- synchronization or eye-event detection;
+- blink/missing-data identification or repair;
+- EEG preprocessing or ocular-artifact correction;
+- multiline/proportional-font geometry;
+- arbitrary image or pixel-drawn IAs;
+- automatic independent selection of every computed word;
+- automatic trial-level exclusion reports;
+- epoching, averaging, statistical modeling, or temporal-overlap correction.
+
+## Coding constraints
+
+`CC` uses condition modulo 100, while `RR` and `LL` are formatted as two-digit indices. Designs with more than 99 regions/labels or condition values sharing the same final two digits risk ambiguity or collisions.
+
+## Scientific limitations
+
+Behavioral labels do not prove cognitive states. Stringent criteria reduce and unbalance observations. Overlapping fixation-related neural activity remains a downstream analysis problem. Validate counts across participants and items and avoid causal claims unsupported by the design.

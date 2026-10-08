@@ -1,0 +1,37 @@
+---
+title: ERPLAB and BINLISTER Handoff
+description: Prepare numeric EyeSort markers and a grouped BDF for downstream ERPLAB processing.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - ERPLAB
+  - BINLISTER
+  - epoching
+---
+
+## Prepare outputs
+
+Apply labels with meaningful descriptions, generate `eyesort_bins.txt`, and convert processed datasets to the `numeric` marker format. BDF generation reads `eyesort_full_code`, but BINLISTER matches `EEG.event.type`.
+
+```matlab
+EEG = pop_convert_event_codes(EEG, 'numeric');
+assert(all(cellfun(@(x) isempty(x) || numel(x)==6, ...
+    {EEG.event.eyesort_full_code})))
+```
+
+## Run BINLISTER
+
+Load a processed dataset and use your standard ERPLAB workflow, selecting the generated BDF. For example:
+
+```matlab
+EEG = pop_binlister(EEG, 'BDF', 'eyesort_bins.txt', ...
+    'IndexEL', 1, 'SendEL2', 'EEG', 'Voutput', 'EEG');
+```
+
+Confirm the exact arguments against your installed ERPLAB version.
+
+## Validate counts
+
+EyeSort may combine multiple canonical codes in one bin when condition description + label description are the same. Compare EventList/bin counts with the EyeSort summary and inspect the BDF expressions.
+
+EyeSort does not epoch, baseline-correct, reject artifacts, average, or resolve overlap. Those choices remain part of the documented downstream analysis.

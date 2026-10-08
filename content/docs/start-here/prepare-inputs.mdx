@@ -1,0 +1,51 @@
+---
+title: Prepare EEG Events and the IA File
+description: Prepare synchronized EEGLAB events and a tab-delimited text interest-area file for deterministic mapping.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - input contract
+  - IA file
+  - triggers
+---
+
+## Inspect a representative dataset
+
+Before opening EyeSort, check the continuous event stream:
+
+```matlab
+unique(string({EEG.event.type}))
+fieldnames(EEG.event)
+```
+
+Record the exact trial, condition, item, fixation, and saccade event names. Inspect a fixation and saccade to confirm the X-position fields are numeric or convertible to numeric values.
+
+Condition and item trigger values must yield the same numeric keys used in the IA file. For example, `S211` and IA value `211` can match; do not use nonnumeric condition/item keys.
+
+## Build the tab-delimited IA file
+
+Use one row per condition–item stimulus. A minimal header might be:
+
+```text
+condition	trigcondition	trigitem	Beginning	PreTarget	Target	Ending
+```
+
+`trigcondition` and `trigitem` are numeric matching keys. `condition` is descriptive text used in readable labels and BDF bins. Each named region cell contains the literal text displayed in that region, including intentional spaces.
+
+Keep region names and order consistent across relevant rows. The number entered in Step 2 must equal the number of named region columns.
+
+## Measure text geometry
+
+Record the horizontal X coordinate of the first character and the rendered width of one character. EyeSort computes each region width as:
+
+```text
+character count × pixels per character
+```
+
+It then advances from the sentence offset. Use the actual font, size, display scaling, and resolution from data collection. A proportional font or multiline display falls outside the verified 1.0 mapping model.
+
+## Preserve reproducible inputs
+
+Archive the IA file, stimulus-display measurements, trigger dictionary, and one representative synchronized dataset. After Step 2, save the text-IA configuration and export the parsed-region table as a QC record.
+
+Next: [configure text interest areas](/docs/workflow/configure-text-ias).

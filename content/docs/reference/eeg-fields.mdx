@@ -1,0 +1,36 @@
+---
+title: EEG and EEG.event Fields
+description: Fields written by EyeSort 1.0 for mapping, diagnostics, labels, and traceability.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - EEG fields
+  - event fields
+  - metadata
+---
+
+## EEG-level fields
+
+- `region_names`: ordered region names.
+- `eyesort_processed`: true after successful Step 2.
+- `eyesort_field_names`: configured fixation/saccade fields plus `rtl`.
+- `eyesort_condition_descriptions`, `eyesort_condition_lookup`: BDF text lookup.
+- `eyesort_step2_diagnostics`: trigger, key, and assignment counts.
+- `eyesort_imported_columns`, `eyesort_import_diagnostics`: Step 3 metadata.
+- `eyesort_label_count`, `eyesort_label_descriptions`: applied label records.
+- `eyesort_event_format`: current labeled-event display format.
+- `eyesort_last_label_matched_count`, `eyesort_last_label_diagnostics`: most recent label result.
+
+## Mapping and stimulus fields
+
+Each event receives initialized `regionBoundaries`, `word_boundaries`, and per-region fields `regionN_start`, `regionN_end`, `regionN_name`, `regionN_words`, and `regionN_text`. Mapped fixations use `current_region`, `current_word`, and `current_word_text`. `current_word` stores the MATLAB-safe word-boundary key—typically a value such as `x4_2` for region 4, word 2—rather than a plain numeric index.
+
+## Trial and behavioral fields
+
+`trial_number`, `condition_number`, `item_number`, `previous_word`, `previous_fixation_region`, `next_fixation_region`, `last_region_visited`, `next_region_visited`, `region_pass_number`, `fixation_in_pass`, `is_last_in_pass`, `is_first_pass_region`, `is_first_pass_word`, `is_regression_trial`, `is_region_regression`, `is_word_regression`, `total_fixations_in_word`, and `total_fixations_in_region`.
+
+## Label fields
+
+`original_type`, `eyesort_condition_code`, `eyesort_region_code`, `eyesort_label_code`, `eyesort_full_code`, `bdf_condition_description`, `bdf_label_description`, and `bdf_full_description`.
+
+Empty values on nonapplicable events are normal. The canonical code is `eyesort_full_code`; do not infer EyeSort identity solely from `type`.

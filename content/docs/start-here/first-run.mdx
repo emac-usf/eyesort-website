@@ -1,0 +1,43 @@
+---
+title: First Run with Sample Data
+description: Complete a short, verified EyeSort 1.0 run and confirm the processed dataset in MATLAB.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - first run
+  - sample data
+  - quickstart
+---
+
+## Get the sample materials
+
+Install EyeSort, then obtain the [open example data and configurations](https://osf.io/zx4un) or the [release compatibility bundle](/datasets). Use the settings supplied with that sample rather than treating GUI placeholder values as universal measurements.
+
+## Run the verified menu flow
+
+1. Choose **EyeSort → 1. Load EEG Dataset(s)**. Select one sample `.set` file and a writable output directory.
+2. Choose **2. Setup Interest Areas → Text-Based Sentence Contents and Interest Areas**. Load the sample IA file/configuration, confirm the values, and run Step 2.
+3. Open **Inspect Parsed Regions**. Check several condition–item rows and their pixel boundaries.
+4. Choose **4. Eye-Tracking Event Labeling**. Load the sample label queue or create a broad, nonzero label; select an event-marker format; click **Apply All & Finish**.
+
+**Expected result:** EyeSort writes `<sample>_processed.set` and normally `<sample>_processed.fdt` to the Step 1 output directory. It may also write `eyesort_labeling_summary_NNN.csv`. No manual save command is required.
+
+## Verify in MATLAB
+
+```matlab
+EEG = pop_loadset('filename', 'sample_processed.set', ...
+                  'filepath', '/path/to/output');
+assert(EEG.eyesort_processed)
+assert(isfield(EEG.event, 'current_region'))
+labeled = ~cellfun(@isempty, {EEG.event.eyesort_full_code});
+nnz(labeled)
+unique({EEG.event(labeled).bdf_label_description})
+```
+
+Expect a positive labeled count. Labeled fixation events should contain `original_type`, `eyesort_full_code`, and BDF description fields.
+
+## Optional outputs
+
+Generate `eyesort_bins.txt` only after labels match. Use **Modify Event Code Format** to inspect readable types or restore numeric codes. Use **History Scripts → Save processing history script** to create a portable `.m` workflow and sidecars.
+
+For every click and validation checkpoint, follow the [quickstart tutorial](/tutorials/quickstart).

@@ -1,0 +1,28 @@
+---
+title: Region and Word Boundary Calculation
+description: How literal text, character width, offset, whitespace, and reading direction determine boundaries.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - text geometry
+  - boundaries
+  - pixels per character
+---
+
+## Region geometry
+
+For each IA row, EyeSort starts at the user-supplied sentence offset. Region width equals the literal string length multiplied by pixels per character. Left-to-right regions advance rightward; right-to-left regions advance leftward. Only horizontal X position is used.
+
+Whitespace is preserved and contributes to width. EyeSort does not impose a leading-space convention: put spaces in the region cells exactly where the desired boundary calculation requires them.
+
+## Boundary ownership
+
+In left-to-right mapping, ordinary regions use half-open intervals `[start, end)`, so a fixation exactly on a shared edge belongs to the following region. The final region includes its outer edge. Word boundaries are also calculated from text spans and stored for metadata.
+
+## Assumptions
+
+Geometry is deterministic only when sentence offset, fixed-width font, font size, display scaling, resolution, and uniform pixels per character reflect the actual experiment. Multiline text, proportional fonts, or variable character widths are outside the verified model.
+
+EyeSort calculates `current_word` and `current_word_text`, but the 1.0 label GUI selects named regions rather than each word independently.
+
+Always validate the table from [Inspect Parsed Regions](/docs/workflow/inspect-qc) against stimulus records.
