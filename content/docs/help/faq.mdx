@@ -1,0 +1,43 @@
+---
+title: Frequently Asked Questions
+description: Concise answers about EyeSort 1.0 inputs, labels, outputs, and downstream use.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - FAQ
+  - frequently asked questions
+---
+
+## Does EyeSort label saccades?
+
+No. EyeSort assigns codes to fixation events. Saccade events provide incoming/outgoing direction criteria for selecting those fixations.
+
+## Does EyeSort support pixel-drawn regions or arbitrary images?
+
+No. Version 1.0 reconstructs named text regions from literal strings, one horizontal offset, and pixels per character.
+
+## Can every word be selected as its own region?
+
+Not automatically in the label GUI. EyeSort computes word index/text metadata, but labeling operates on user-defined region columns. You may define word-sized regions only when the region schema remains consistent and interpretable.
+
+## Does EyeSort save my result?
+
+Yes. **Apply All & Finish** auto-saves `<base>_processed.set/.fdt` to the Step 1 output directory. There is no Save Labeled Dataset menu item.
+
+## Can I change readable event types later?
+
+Yes. `eyesort_full_code` remains canonical, while **Modify Event Code Format** rewrites `EEG.event.type`. `original_type` supports restoration when available.
+
+## Can I use ERPLAB or deconvolution?
+
+Yes, downstream. EyeSort can generate a BINLISTER BDF and its event metadata can serve as model predictors. It does not epoch, average, or correct temporal overlap.
+
+## Can I batch process?
+
+Yes. Inputs must come from one directory; outputs go to the required output directory and files are processed one at a time.
+
+## How do I reproduce a run?
+
+Save the text-IA config and full label queue, export the History Script bundle, preserve the IA file, and report versions, conflict policy, criteria, and post-label counts.
+
+See [known limitations](/docs/help/limitations) and [issue reporting](/docs/help/reproducible-issue).

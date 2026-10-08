@@ -1,10 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
-import matter from "gray-matter";
+import { parse as parseYaml } from "yaml";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import { mdxComponents } from "@/components/mdx";
 
 type Section = "docs" | "tutorials" | "news";
 
@@ -12,9 +13,21 @@ export interface Frontmatter {
   title?: string;
   description?: string;
   lastUpdated?: string;
+  lastVerified?: string;
   date?: string;
   version?: string;
-  [key: string]: string | undefined;
+  aliases?: string[];
+  [key: string]: string | string[] | undefined;
+}
+
+function parseFrontmatter(raw: string) {
+  const match = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/.exec(raw);
+  if (!match) return { content: raw, data: {} };
+
+  return {
+    content: raw.slice(match[0].length),
+    data: (parseYaml(match[1]) ?? {}) as Frontmatter,
+  };
 }
 
 export function getMdxPath(section: Section, slugParts: string[]) {
@@ -27,11 +40,11 @@ export function getMdxSource(section: Section, slugParts: string[]) {
   if (!fs.existsSync(filePath)) return null;
 
   const raw = fs.readFileSync(filePath, "utf8");
-  const { content, data } = matter(raw);
+  const { content, data } = parseFrontmatter(raw);
 
   return {
     content,
-    frontmatter: data as Frontmatter,
+    frontmatter: data,
     filePath,
   };
 }
@@ -39,6 +52,7 @@ export function getMdxSource(section: Section, slugParts: string[]) {
 export async function RenderMdx({ content }: { content: string }) {
   return MDXRemote({
     source: content,
+    components: mdxComponents,
     options: {
       mdxOptions: {
         remarkPlugins: [remarkGfm],

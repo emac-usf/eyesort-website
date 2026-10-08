@@ -1,0 +1,45 @@
+---
+title: System and Data Requirements
+description: Software, EEG event, trigger, stimulus, and directory requirements for EyeSort 1.0.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - prerequisites
+  - requirements
+  - EYE-EEG
+---
+
+## Software
+
+EyeSort 1.0 requires MATLAB with a working EEGLAB installation. It is distributed from the project’s GitHub releases rather than the EEGLAB plugin manager. ERPLAB is needed only for a downstream BINLISTER workflow; a deconvolution toolbox is likewise optional and downstream.
+
+## Dataset contract
+
+Use continuous EEGLAB `.set` datasets whose eye events are already synchronized into `EEG.event`. Every selected dataset must come from the same input directory, and Step 1 requires an existing output directory even for one file.
+
+At minimum, events must provide:
+
+- a fixation event type and fixation X-position field;
+- a saccade event type plus start-X and end-X fields if direction filters will be used;
+- trial start and end codes;
+- condition and item trigger codes that contain usable numeric identifiers;
+- optional stimulus-window start/end codes when only part of each trial should be mapped.
+
+The defaults match common EYE-EEG output: `R_fixation`, `fix_avgpos_x`, `R_saccade`, `sac_startpos_x`, and `sac_endpos_x`. All five names can be changed.
+
+## Interest-area file contract
+
+The IA file is tab-delimited, with one row for each condition–item stimulus and columns for:
+
+- numeric condition and item keys;
+- one or more descriptive condition columns used in BDF text;
+- the same ordered set of named text-region columns on relevant rows;
+- optional covariates to import later.
+
+Region cells contain literal displayed text. Spaces count toward geometry. Measure the sentence offset and pixels per character from the actual experiment display.
+
+## Applicability checks
+
+Confirm single-line stimuli, fixed-width text, uniform character width, and a consistent region schema. EyeSort uses X coordinates only. Handle blinks, missing eye data, synchronization, artifact correction, and fixation detection upstream.
+
+Next: [install EyeSort](/docs/start-here/install-upgrade) or [prepare your inputs](/docs/start-here/prepare-inputs).

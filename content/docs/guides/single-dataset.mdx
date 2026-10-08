@@ -1,0 +1,33 @@
+---
+title: Single-Dataset Workflow
+description: A validation-first workflow for configuring and checking EyeSort on one participant.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - single participant
+  - validation workflow
+---
+
+## Use one representative file first
+
+Select one continuous `.set` file and a separate output directory in Step 1. Inspect event types and fields before Step 2.
+
+Configure the text IA mapping, manually save the `.mat` configuration, and optionally save `<base>_eyesort_ia.set`. Review parsed regions and `EEG.eyesort_step2_diagnostics`; stop if key or assignment counts are wrong.
+
+## Build broad-to-specific labels
+
+Start with a broad region-only label to prove that candidates exist. Add pass, fixation class, surrounding region, and saccade direction one at a time while monitoring zero-match diagnostics. Save the complete queue.
+
+Click **Apply All & Finish**. EyeSort writes `<base>_processed.set/.fdt` automatically and may create a numbered summary CSV.
+
+## Validate the output
+
+```matlab
+labeled = ~cellfun(@isempty, {EEG.event.eyesort_full_code});
+table({EEG.event(labeled).eyesort_full_code}', ...
+      {EEG.event(labeled).bdf_full_description}')
+```
+
+Spot-check `original_type`, `current_region`, `region_pass_number`, `fixation_in_pass`, `is_last_in_pass`, previous/next region fields, and the source X coordinate.
+
+Once the counts and event examples match the analysis plan, reuse the saved configurations in the [batch workflow](/docs/guides/batch-workflow).

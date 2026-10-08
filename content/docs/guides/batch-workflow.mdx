@@ -1,0 +1,35 @@
+---
+title: Batch Workflow and Output Naming
+description: Process same-directory datasets one at a time with stable configurations and predictable filenames.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - batch processing
+  - file naming
+  - summary CSV
+---
+
+## Prepare the batch
+
+Put source `.set/.fdt` pairs in one input directory and choose a separate output directory. Step 1 rejects mixed source directories. Use **Browse Directory** for a clean, reproducible file set.
+
+Validate the text-IA configuration and label queue on one representative dataset first. Then rerun Step 1 with multiple files, load the saved Step 2 configuration, inspect the first mapped dataset, optionally import IA columns, and load the saved label queue in Step 4.
+
+## Processing behavior
+
+EyeSort handles files one at a time. Step 2 stores temporary text-IA datasets; Step 4 applies every queued label in memory, saves one final dataset, and cleans temporary files.
+
+Final output names are normalized to:
+
+```text
+<base>_processed.set
+<base>_processed.fdt
+```
+
+A batch summary uses the next free name `eyesort_labeling_summary_NNN.csv` and includes dataset rows plus TOTAL rows.
+
+## Validate batch consistency
+
+Compare assignment diagnostics, matched-label counts, and missing-key lists across participants. A successful batch completion can still contain skipped or failed datasets; read MATLAB warnings and count actual output files.
+
+Export a [processing script](/docs/workflow/export-script) for a reviewable record of paths, configs, conflict policy, summary behavior, and BDF generation.

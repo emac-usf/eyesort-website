@@ -1,62 +1,53 @@
 ---
 title: Documentation Overview
-description: Complete guide to using EyeSort for eye-tracking event labeling in EEGLAB
-lastUpdated: 2026-01-19
+description: Task-first documentation for installing EyeSort 1.0, labeling synchronized fixation events, and validating the outputs.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - manual
+  - BDF
+  - BINLISTER
+  - IA
+  - EYE-EEG
 ---
 
-# Documentation Overview
+## Start with the outcome
 
-Welcome to the EyeSort documentation. This guide will help you get started with EyeSort and master its features for analyzing eye-tracking data in your EEG/ERP studies.
+EyeSort 1.0 turns synchronized fixation events in continuous EEGLAB datasets into reproducible, behavior-contingent event markers. It maps horizontal fixation positions to user-defined text regions, derives reading context, and labels only the fixation events that match a reviewed label queue.
 
-## What is EyeSort?
+EyeSort belongs after synchronization and eye-event detection, and before ERP/FRP averaging, BINLISTER, time-frequency analysis, or deconvolution. It does **not** synchronize streams, preprocess EEG, detect or repair fixations, blinks, or missing eye data, or separate temporally overlapping neural activity.
 
-EyeSort is an EEGLAB plugin that integrates text/pixel interest areas with synchronized eye-tracking events and builds robust, reproducible label codes for ERP binning. It provides a guided GUI workflow to:
+## Current scope
 
-- Load one or many EEG `.set` datasets
-- Define interest areas (text-based sentences or pixel regions)
-- Label fixations and saccades with rich criteria (region, pass, fixation type, saccade direction)
-- Auto-generate BINLISTER Bin Descriptor Files (BDF) from labeled codes
-- Save labeled datasets for downstream ERP workflows
+EyeSort 1.0 is designed for synchronized, continuous EEGLAB `.set` data from single-line reading studies. It reconstructs user-defined text regions from one horizontal sentence offset, literal character counts, and uniform pixels per character. Mapping uses fixation X position only.
 
-## Quick Links
+The verified design envelope is a fixed-width font, consistent display geometry, numeric condition/item triggers, and the same named region structure across relevant trials. The labeler selects those user-defined regions; it does not expose every calculated word as an independently selectable region.
 
-- **New to EyeSort?** Start with [Installation](/docs/installation) and [First Run](/docs/first-run)
-- **Ready to analyze?** Check out our [Tutorials](/tutorials)
-- **Need help?** See [Troubleshooting](/docs/troubleshooting) or [Contact](/contact)
-- **Want sample data?** Download from our [Datasets](/datasets) page
+Saccades provide incoming/outgoing direction context, but EyeSort labels **fixation events only**. If your data still need synchronization, fixation detection, blink/missing-data repair, or EEG preprocessing, complete those upstream steps first.
 
-## Requirements
+## Choose a path
 
-Before using EyeSort, ensure you have:
+- New installation: [check requirements](/docs/start-here/requirements), then [install or upgrade](/docs/start-here/install-upgrade).
+- First evaluation: follow the [sample-data quickstart](/tutorials/quickstart).
+- Own data: [prepare the EEG events and IA file](/docs/start-here/prepare-inputs), then follow the [single-dataset guide](/docs/guides/single-dataset).
+- Many participants: use the [batch workflow](/docs/guides/batch-workflow).
+- Existing outputs: consult the [event fields](/docs/reference/eeg-fields), [output files](/docs/reference/outputs), or [diagnostics](/docs/reference/diagnostics).
 
-- **MATLAB** and **EEGLAB** installed (EyeSort is an EEGLAB plugin)
-- **Synchronized eye-tracking + EEG datasets** where fixation and saccade events exist in `EEG.event`
-  - Defaults assume: `R_fixation`, `R_saccade`, `fix_avgpos_x`, `sac_startpos_x`, `sac_endpos_x`
-  - All field names are customizable in the GUI
+## Verified 1.0 menu sequence
 
-## Documentation Structure
+1. **1. Load EEG Dataset(s)** — choose one or more `.set` files and a required output directory.
+2. **2. Setup Interest Areas** — configure text geometry; optionally save `*_eyesort_ia.set`.
+3. Optionally **Inspect Parsed Regions** and **3. Import IA Columns to Events**.
+4. **4. Eye-Tracking Event Labeling** — queue labels and apply them. EyeSort auto-saves `*_processed.set/.fdt`.
+5. Optionally generate `eyesort_bins.txt`, convert the displayed event-marker format, and export a processing script.
 
-### Getting Started
-Learn the basics of installing and running EyeSort for the first time.
+There is no “Save Labeled Dataset” menu command in EyeSort 1.0.
 
-### Core Concepts
-Understand the key concepts behind EyeSort's labeling system, including interest areas, passes, and fixation types.
+## Long-form manual and project resources
 
-### Workflows
-Step-by-step guides for common EyeSort operations.
+- [EyeSort 1.0 User Manual (PDF)](https://github.com/emac-usf/EyeSort/releases/download/v1.0/EyeSort_Manual.pdf)
+- [EyeSort 1.0 release](https://github.com/emac-usf/EyeSort/releases/tag/v1.0)
+- [Open example data and configurations](https://osf.io/zx4un)
+- [GitHub repository](https://github.com/emac-usf/EyeSort)
 
-### Reference
-Detailed technical reference for configuration files, label codes, and GUI options.
-
-### Help
-Troubleshooting tips and frequently asked questions.
-
-## Contributing
-
-EyeSort is open-source software. If you find issues or have suggestions, please:
-
-- Report bugs on [GitHub Issues](https://github.com/emac-usf/EyeSort/issues)
-- Contribute improvements via pull requests
-- Join discussions on [GitHub Discussions](https://github.com/emac-usf/EyeSort/discussions)
-
-
+The web documentation reflects the verified 1.0 source where wording in the June 2026 PDF differs.

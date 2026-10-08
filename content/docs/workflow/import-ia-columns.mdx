@@ -1,0 +1,41 @@
+---
+title: Import Additional IA Columns
+description: Copy selected stimulus covariates from the IA file into matching EEG events.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - Step 3
+  - covariates
+  - stimulus variables
+---
+
+## When to use Step 3
+
+Choose **EyeSort → 3. Import IA Columns to Events** after Step 2 when downstream models need variables such as lexical frequency, predictability, constraint, item set, or stimulus length.
+
+Step 3 reads the latest Step 2 configuration, excludes condition, item, and region columns from the selectable list, and matches IA rows to events by `condition_number` plus `item_number`.
+
+## Import
+
+Confirm the IA file, select one or more additional columns, and click **Confirm**. In batch mode, EyeSort modifies each Step 2 temporary dataset one at a time. Imported headers are converted with `matlab.lang.makeValidName`, so punctuation or leading digits may change the resulting field name.
+
+## Expected result and verification
+
+```matlab
+EEG.eyesort_imported_columns
+EEG.eyesort_import_diagnostics
+fieldnames(EEG.event)
+```
+
+`eyesort_import_diagnostics` reports valid and invalid text rows, valid/invalid event keys, assigned events, matched keys, missing keys, and unused text keys.
+
+Empty imported values usually indicate a condition–item mismatch, not a derivation failure. EyeSort transfers source values unchanged; it does not calculate them.
+
+For scripted use:
+
+```matlab
+EEG = import_ia_columns(EEG, iaFile, 'trigcondition', ...
+    'trigitem', {'frequency','predictability'}, 'command');
+```
+
+Next: [build and apply a label queue](/docs/workflow/label-queue).

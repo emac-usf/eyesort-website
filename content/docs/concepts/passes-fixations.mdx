@@ -1,0 +1,32 @@
+---
+title: Passes, Fixation Classes, Skips, and Regressions
+description: Definitions used by EyeSort to contextualize fixation events within region visits.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - pass structure
+  - fixation type
+  - regression
+---
+
+## Passes
+
+A pass is a contiguous run of fixations in a named region. The first entry is pass 1; leaving and returning increments that region’s independent pass counter. If a region was skipped after gaze reached a later region, its first actual fixation starts at pass 2. The GUI groups pass 3 and above as “third+.”
+
+## Fixation classes within a pass
+
+- **Single fixation:** the only fixation in that region pass.
+- **First of multiple:** `fixation_in_pass == 1` and the pass has more than one fixation.
+- **Second of multiple:** `fixation_in_pass == 2`.
+- **All subsequent:** fixation 3 or later.
+- **Last in region:** `is_last_in_pass` is true; this can overlap another class.
+
+A refixation is another fixation within the same region and pass. `fixation_in_pass` records its ordinal position.
+
+## Regressions and skips
+
+A region regression occurs when the current region order is earlier than the previous fixation’s region under the mapped reading sequence. Word regressions compare word order within the same region. Reading direction changes what “forward” means for saccade filters.
+
+`is_regression_trial` marks mapped events in a trial where a regression was detected. These descriptive fields are available even when a fixation receives no EyeSort code.
+
+See the [event-field reference](/docs/reference/eeg-fields) for exact names.

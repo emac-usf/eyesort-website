@@ -1,0 +1,34 @@
+---
+title: Export and Rerun a Processing Script
+description: Bundle the verified GUI workflow into a portable MATLAB script with configuration sidecars.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - history script
+  - reproducibility
+  - script export
+---
+
+## Export the session
+
+After configuring Steps 1–4, choose **EyeSort → History Scripts → Save processing history script**. EyeSort writes a GUI-free `.m` file and copies portable sidecars beside it:
+
+- the text-IA configuration;
+- the label queue, when available;
+- localized copies of the IA text file(s).
+
+The default script name is `eyesort_processing_script.m`; sidecars are based on the chosen script name.
+
+## Review before rerunning
+
+Open the generated script and check `inputDir`, `outputDir`, `conflictResolution`, `generateSummary`, and `generateBDF`. By default, the script scans `inputDir` for every `.set` file. The exact files chosen in Step 1 are included as a commented alternative.
+
+The script calls the non-GUI functions, processes files one at a time, writes `<base>_processed.set/.fdt`, can create the numbered summary CSV, and can generate `eyesort_bins.txt`.
+
+## Reproducibility checklist
+
+Archive the script and all sidecars together. Record EyeSort, MATLAB, and EEGLAB versions; do not rely only on plugin-cache files. Rerun on one representative participant and compare canonical label counts before processing a new batch.
+
+EyeSort also records evaluable commands in EEGLAB history. The exported bundle is preferable for sharing because it localizes configuration and IA dependencies.
+
+See [MATLAB API](/docs/reference/matlab-api) and [reporting guidance](/docs/guides/frp-deconvolution).

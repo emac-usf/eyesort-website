@@ -1,0 +1,32 @@
+---
+title: CCRRLL Codes and Label Conflicts
+description: Understand canonical code identity, practical limits, collisions, queue order, and overwrite policy.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - CCRRLL
+  - code collision
+  - conflicts
+---
+
+## Canonical code
+
+Every labeled fixation receives a six-character `eyesort_full_code`:
+
+- `CC`: condition number modulo 100;
+- `RR`: one-based region order;
+- `LL`: applied label number/order.
+
+Example: `210302` means condition suffix 21, region 03, label 02. The component fields are also stored separately.
+
+## Practical limits
+
+The fixed-width identity is safest with conditions distinguishable by their final two digits and with 01–99 regions and 01–99 labels. Values above two digits can expand formatted strings or collide with the intended six-digit interpretation. Two condition values such as 121 and 221 both produce `CC = 21`.
+
+Review code maps before analysis, especially in large factorial designs. Human-readable condition and label descriptions help interpretation but do not eliminate canonical collisions.
+
+## Conflicts
+
+Labels are applied in queue order. If a later definition matches a fixation already carrying `eyesort_full_code`, EyeSort records a conflict and asks whether to replace the existing label or keep it. The choice can be remembered for the remaining run.
+
+Conflict policy changes the scientific classification, so save the queue and record the chosen policy. Scripted runs should set `conflictResolution` explicitly.

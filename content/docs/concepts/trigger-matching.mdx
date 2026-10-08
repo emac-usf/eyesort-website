@@ -1,0 +1,30 @@
+---
+title: Condition and Item Trigger Matching
+description: How EyeSort joins EEG trials to IA rows using numeric condition–item keys.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - condition triggers
+  - item triggers
+  - matching
+---
+
+## The join key
+
+EyeSort tracks trial context between configured start and end codes. Inside each trial it extracts numeric identifiers from recognized condition and item events, then creates a `condition_item` key such as `211_42`.
+
+Step 2 uses that key to select one IA row. Step 3 uses `condition_number` plus `item_number` to copy optional columns. The IA condition and item columns must therefore contain numeric values that correspond to the event triggers.
+
+## Matching behavior
+
+Exact trigger text is accepted. Numeric-only configuration values may match the numeric portion of an event marker, and item ranges such as `S1:S112` are expanded. Case-insensitive and optional leading-`$` matching applies to IA column names, not to arbitrary reinterpretation of trigger identities.
+
+## Common failure modes
+
+- condition/item events occur outside the configured trial boundaries;
+- one key is missing before fixation events begin;
+- IA values are nonnumeric or duplicated unexpectedly;
+- configured triggers omit codes present in some participants;
+- EEG keys have no IA row, or IA rows are never represented in EEG.
+
+Check `missing_text_file_keys`, `unused_text_file_keys`, trigger match counts, and complete-key counts in `EEG.eyesort_step2_diagnostics`. Resolve key mismatches before interpreting region or label counts.

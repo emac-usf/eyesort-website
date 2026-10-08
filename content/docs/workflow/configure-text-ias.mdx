@@ -1,0 +1,46 @@
+---
+title: Configure Text Interest Areas
+description: Run EyeSort Step 2 to reconstruct text geometry and derive fixation context.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - Step 2
+  - text IA
+  - global study parameters
+---
+
+## Enter study-level parameters
+
+Open **EyeSort → 2. Setup Interest Areas → Text-Based Sentence Contents and Interest Areas**. Select the tab-delimited IA file, then enter:
+
+- reading direction;
+- sentence X offset and pixels per character;
+- region count and comma-separated region names in display order;
+- descriptive condition column(s), numeric condition column, and numeric item column;
+- trial start/end codes and optional stimulus-window codes;
+- condition and item trigger lists;
+- fixation/saccade event names and X fields.
+
+Item ranges such as `S1:S112` are expanded. Placeholder numbers in the GUI are examples, not measurements for your study.
+
+## Save and process
+
+Use **Save Configuration** to create a study-owned `.mat` file. **Save Intermediate Dataset(s)** is optional and produces `<base>_eyesort_ia.set/.fdt` after mapping. Click **Confirm** to run trigger validation, boundary assignment, and trial labeling.
+
+EyeSort also caches the latest settings in `cache/last_text_ia_config.mat`; treat that as convenience state only.
+
+## Expected result
+
+`EEG.eyesort_processed` is true, `EEG.region_names` contains the ordered names, and fixation events have fields such as `current_region`, `region_pass_number`, `fixation_in_pass`, and `current_word_text`.
+
+Verify:
+
+```matlab
+assert(EEG.eyesort_processed)
+EEG.region_names
+EEG.eyesort_step2_diagnostics
+assigned = ~cellfun(@isempty, {EEG.event.current_region});
+nnz(assigned)
+```
+
+A successful function call is not enough: inspect diagnostics and [parsed regions](/docs/workflow/inspect-qc) before labeling.

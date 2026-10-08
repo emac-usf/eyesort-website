@@ -1,0 +1,31 @@
+---
+title: Right-to-Left Stimuli
+description: Configure region geometry and saccade direction for right-to-left single-line text.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - RTL
+  - Arabic
+  - Hebrew
+---
+
+## Configure the mapping
+
+In Step 2, check **Right-to-left reading language**. Enter region names in reading/display order, with region 1 at the rightmost starting position. The sentence offset is the right edge from which EyeSort advances leftward.
+
+Region width still equals literal character count × pixels per character. Stored boundaries remain `[left, right]`, but their construction proceeds toward smaller X coordinates.
+
+## Direction semantics
+
+EyeSort reverses the forward/backward interpretation: decreasing X is forward in RTL, increasing X is backward. The same >5 px incoming and >10 px outgoing thresholds apply.
+
+## Validate before labeling
+
+Inspect every region’s text and boundary order in **Inspect Parsed Regions**. Confirm sample fixation X values map to intended regions and that known progressive/regressive saccades satisfy the expected direction.
+
+```matlab
+EEG.eyesort_field_names.rtl
+EEG.region_names
+```
+
+RTL support does not remove other 1.0 constraints: stimuli must be single-line, fixed-width, uniformly spaced, and represented by a consistent named-region schema.

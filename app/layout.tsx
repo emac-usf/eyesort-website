@@ -4,12 +4,14 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { getLatestVersion } from "@/lib/version";
+import { buildDocsSearchIndex } from "@/lib/docs-content";
+import { SITE } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE.url),
   title: "EyeSort – Region-aware eye-tracking event labeling for EEGLAB",
-  description:
-    "EyeSort is an EEGLAB plugin that integrates text/pixel interest areas with synchronized eye-tracking events and builds robust, reproducible label codes for ERP binning.",
+  description: SITE.description,
   keywords: [
     "EyeSort",
     "EEGLAB",
@@ -28,9 +30,8 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "EyeSort – Region-aware eye-tracking event labeling for EEGLAB",
-    description:
-      "EEGLAB plugin for integrating eye-tracking events with EEG data for reading research",
-    url: "https://eyesort.usf.edu", // TODO: Update with actual domain
+    description: SITE.description,
+    url: SITE.url,
     siteName: "EyeSort",
     locale: "en_US",
     type: "website",
@@ -38,8 +39,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "EyeSort – Eye-tracking event labeling for EEGLAB",
-    description:
-      "EEGLAB plugin for integrating eye-tracking events with EEG data for reading research",
+    description: SITE.description,
   },
   robots: {
     index: true,
@@ -56,12 +56,14 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const version = await getLatestVersion();
+  const searchEntries = buildDocsSearchIndex();
 
   return (
     <html lang="en">
       <body className="bg-white text-slate-900 flex flex-col min-h-screen">
-        <Navbar version={version} />
-        <main className="flex-1">{children}</main>
+        <a href="#main-content" className="skip-link">Skip to main content</a>
+        <Navbar version={version} searchEntries={searchEntries} />
+        <main id="main-content" className="flex-1" tabIndex={-1}>{children}</main>
         <Footer />
       </body>
     </html>

@@ -1,0 +1,48 @@
+---
+title: Load One Dataset or a Batch
+description: Use EyeSort Step 1 to select same-directory datasets and the required output location.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - Step 1
+  - batch loading
+  - output directory
+---
+
+## Open Step 1
+
+Choose **EyeSort → 1. Load EEG Dataset(s)**. Add files with **Browse Files**, or use **Browse Directory** to select every `.set` file in one folder. All selected files must share one parent directory.
+
+Choose an existing output directory. It is required in both modes because Step 4 automatically saves final outputs there.
+
+## One file
+
+With one file selected, EyeSort loads that dataset into EEGLAB and stores the output directory for later saving. The source is not overwritten.
+
+Verify:
+
+```matlab
+EEG.filename
+numel(EEG.event)
+eyesort_single_output_dir
+```
+
+## Multiple files
+
+Two or more files activate batch mode. EyeSort stores file paths and names, loads the first dataset for reference, then processes datasets one at a time in Steps 2–4.
+
+Verify:
+
+```matlab
+eyesort_batch_mode
+numel(eyesort_batch_file_paths)
+eyesort_batch_output_dir
+```
+
+Batch processing reduces memory use; it does not combine participants. The final name for each input is normalized to `<base>_processed.set/.fdt`.
+
+## Before continuing
+
+Confirm that the first dataset has the expected event types and fields. A representative file that differs from the rest can hide batch-wide input drift, so test Step 2 on one participant before committing to a large batch.
+
+Next: [configure text interest areas](/docs/workflow/configure-text-ias).

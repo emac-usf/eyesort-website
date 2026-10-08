@@ -20,7 +20,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/docs" className="text-slate-600 hover:text-slate-900 transition-colors">
-                  Get Started
+                  Documentation
                 </Link>
               </li>
               <li>
@@ -42,53 +42,43 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-slate-900 mb-3">Community</h3>
+            <h3 className="text-sm font-semibold text-slate-900 mb-3">Resources</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a
-                  href={LINKS.githubRepo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-slate-600 hover:text-slate-900 transition-colors"
-                >
-                  GitHub
-                </a>
+                <Link href="/resources" className="text-slate-600 hover:text-slate-900 transition-colors">
+                  Downloads & citation
+                </Link>
               </li>
               <li>
                 <a
-                  href={LINKS.githubIssues}
+                  href={LINKS.osfProject}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-slate-600 hover:text-slate-900 transition-colors"
                 >
-                  Issues
+                  Sample data on OSF
                 </a>
               </li>
               <li>
-                <a
-                  href={LINKS.githubDiscussions}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-slate-600 hover:text-slate-900 transition-colors"
-                >
-                  Discussions
-                </a>
+                <Link href="/news" className="text-slate-600 hover:text-slate-900 transition-colors">
+                  Releases & news
+                </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold text-slate-900 mb-3">Help</h3>
+            <h3 className="text-sm font-semibold text-slate-900 mb-3">Project</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/contact" className="text-slate-600 hover:text-slate-900 transition-colors">
-                  Contact
+                <Link href="/about" className="text-slate-600 hover:text-slate-900 transition-colors">
+                  About & contact
                 </Link>
               </li>
               <li>
-                <Link href="/papers" className="text-slate-600 hover:text-slate-900 transition-colors">
-                  Citation
-                </Link>
+                <a href={LINKS.githubIssues} target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-slate-900 transition-colors">
+                  Report an issue
+                </a>
               </li>
               <li>
                 <a
@@ -107,7 +97,7 @@ export function Footer() {
         <div className="mt-8 border-t border-slate-200 pt-8 text-center text-sm text-slate-600">
           <p>
             © {currentYear} Eye Movements & Cognition Lab, University of South Florida.
-            Released under the GNU GPL v3.0 License.
+            EyeSort is released under the GNU GPL v3.0-or-later License.
           </p>
         </div>
       </div>

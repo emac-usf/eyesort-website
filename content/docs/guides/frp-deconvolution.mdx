@@ -1,0 +1,34 @@
+---
+title: FRP and Deconvolution Use
+description: Use behavior-contingent metadata downstream without changing canonical EyeSort identity.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - Unfold
+  - single-trial
+  - reporting
+---
+
+## Preserve canonical fields
+
+For models that accept string or event-level predictors, `EEG.event.type` may be descriptive or restored to the original marker. Keep `eyesort_full_code` unchanged as the stable EyeSort identity, and retain `original_type` for traceability.
+
+Useful predictors include `current_region`, `region_pass_number`, `fixation_in_pass`, regression flags, previous/next region fields, condition/item/trial numbers, word text/index, and imported IA covariates.
+
+## Model the scientific problem
+
+EyeSort labels behavior; it does not deconvolve temporally overlapping brain responses. When event classes differ in fixation duration, saccade amplitude, timing, or participant/item prevalence, choose a model that handles those differences.
+
+## Reporting checklist
+
+Report:
+
+- EyeSort version and upstream synchronization/event-detection method;
+- exact region geometry and label criteria, including saccade thresholds when used;
+- event-marker format and conflict policy;
+- post-EyeSort event/epoch counts by condition and behavior;
+- participant- and item-level distributions of target behaviors;
+- shared text-IA and label-queue files;
+- downstream overlap, artifact, epoching, and statistical methods.
+
+Explain the behavioral-specificity versus power tradeoff. A narrow label can be theoretically precise while leaving too few or unbalanced observations for reliable inference.

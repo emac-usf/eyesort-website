@@ -1,3 +1,5 @@
+import { PROJECT_LINKS, RELEASE } from "@/lib/site";
+
 export interface Dataset {
   title: string;
   description: string;
@@ -9,22 +11,14 @@ export interface Dataset {
 
 export const DATASETS: Dataset[] = [
   {
-    title: "EyeSort Compatible Sample Dataset",
+    title: `EyeSort ${RELEASE.version} Compatible Files`,
     description:
-      "A sample dataset package containing synchronized EEG + eye-tracking data, interest area files, and expected outputs. Use this to validate your EyeSort installation and learn the pipeline.",
+      `The release-hosted compatibility bundle for practicing the EyeSort ${RELEASE.version} workflow before adapting it to your own data.`,
     contents: [
-      "EEGLAB .set/.fdt files with synchronized eye-tracking events",
-      "Tab-delimited text-based interest area file with trial/region definitions",
-      "Sample configuration files (text IA config, label config)",
-      "Expected output events and BDF file for validation",
-      "README with data description and tutorial workflow",
+      "EyeSort-compatible sample datasets",
+      "Tab-delimited text interest-area file",
     ],
-    downloadUrl:
-      "https://github.com/emac-usf/EyeSort/releases/latest/download/EyeSort_compatible_files.zip",
-    license: "Creative Commons Attribution 4.0 International (CC BY 4.0)",
-    cite:
-      "Eye Movements & Cognition Lab, University of South Florida (2025). EyeSort Sample Dataset.",
+    downloadUrl: PROJECT_LINKS.sampleDataset,
+    license: "See the accompanying files and OSF record for data terms",
   },
 ];
-
-

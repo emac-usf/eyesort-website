@@ -1,275 +1,170 @@
 ---
-title: Quickstart Tutorial
-description: Complete walkthrough of the EyeSort workflow from data loading to labeled output
-date: 2026-01-19
+title: Quickstart with Sample Data
+description: Produce and verify a labeled EyeSort 1.0 dataset from the open sample files.
+date: 2026-10-07
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - quickstart
+  - sample workflow
+  - full pipeline
 ---
 
-# Quickstart Tutorial
+## Outcome
 
-This tutorial walks you through the complete EyeSort workflow using the sample dataset. By the end, you'll have labeled eye-tracking events ready for ERP analysis.
+In about 30 minutes, you will produce a verified `<sample>_processed.set/.fdt`, a labeling summary, and an optional `eyesort_bins.txt`. EyeSort labels fixation events; saccade direction is only a criterion on those fixations.
 
-## Goal
+## Before you begin
 
-Learn the complete EyeSort workflow:
-1. Load a dataset with synchronized EEG + eye-tracking data
-2. Define text-based interest areas
-3. Apply event labeling criteria
-4. Generate a BINLISTER BDF file
-5. Save the labeled dataset
+- [Install EyeSort 1.0](/docs/start-here/install-upgrade).
+- Download the [open sample data and configurations](https://osf.io/zx4un) or the [release compatibility bundle](/datasets).
+- Extract the files to a writable working directory.
+- Create a separate empty output directory.
 
-## Time Required
+Use the configuration supplied with the sample. Values shown as placeholders in the Step 2 GUI are not universal experiment settings.
 
-**30-45 minutes** for your first time through the workflow.
+## 1. Launch and verify EyeSort
 
-## Prerequisites
-
-- [ ] EyeSort [installed](/docs/installation) in EEGLAB
-- [ ] [Sample dataset](/datasets) downloaded and extracted
-- [ ] MATLAB and EEGLAB running
-
-## Step 1: Launch EEGLAB
-
-Open MATLAB, navigate to your EEGLAB directory, and run:
+Start EEGLAB:
 
 ```matlab
 eeglab
+which eegplugin_eyesort -all
 ```
 
-Verify that the **EyeSort** menu appears in the EEGLAB toolbar.
+Open the **EyeSort** menu.
 
-## Step 2: Load Dataset
+**Expected result:** The menu reports **EyeSort v1.0** and shows Steps 1–4, BDF generation, event-code conversion, History Scripts, and Help.
 
-1. In EEGLAB, go to: **EyeSort → 1. Load EEG Dataset(s)**
-2. Select **Single Dataset Mode**
-3. Click **Browse** and select the sample `.set` file
-4. Click **OK**
+**Verify in MATLAB:** `which` should return one intended plugin path. Remove duplicate EyeSort paths before continuing.
 
-The dataset loads into EEGLAB. You should see it listed in the EEGLAB interface.
+## 2. Load the sample dataset
 
-### Verify Your Data
+Choose **EyeSort → 1. Load EEG Dataset(s)**. Click **Browse Files**, select one sample `.set` file, choose the output directory, and click **Confirm**.
 
-Check that your dataset contains eye-tracking events:
+**Expected result:** The sample dataset appears in EEGLAB. EyeSort remembers the output directory; it will auto-save there after labeling.
+
+**Verify in MATLAB:**
 
 ```matlab
-% View event types
-unique({EEG.event.type})
-
-% Should see fixation and saccade events
+EEG.filename
+numel(EEG.event)
+unique(string({EEG.event.type}))
+eyesort_single_output_dir
 ```
 
-## Step 3: Setup Interest Areas
+Confirm that fixation, saccade, trial, condition, and item events are present.
 
-1. Go to: **EyeSort → 2. Setup Interest Areas → Text-Based Sentence Contents and Interest Areas**
-2. A configuration GUI opens
+## 3. Map text interest areas
 
-### Configure Text-Based Interest Areas
+Choose **EyeSort → 2. Setup Interest Areas → Text-Based Sentence Contents and Interest Areas**. Use **Load Configuration** when the sample includes a Step 2 `.mat` file. Otherwise enter the values documented with the sample, including:
 
-Fill in these fields using the sample dataset parameters:
+- the sample IA text file;
+- measured sentence offset and pixels per character;
+- ordered region names;
+- condition-label, condition-code, and item-code columns;
+- trial and optional stimulus-window triggers;
+- condition and item trigger lists;
+- fixation/saccade event types and X fields.
 
-#### File Selection
-- **IA File**: Browse to the sample `.txt` interest area file
+Save a named copy of the configuration. Optionally choose **Save Intermediate Dataset(s)**, then click **Confirm**.
 
-#### Display Parameters
-- **Sentence offset (pixels)**: `281`
-- **Pixels per character**: `14`
+**Expected result:** EyeSort reports trigger and assignment counts. `EEG.eyesort_processed` becomes true. An optional intermediate is named `<sample>_eyesort_ia.set/.fdt`.
 
-#### Region Configuration
-- **Number of regions**: `3`
-- **Region names**: `Region1, Region2, Region3`
-- **Condition label column**: `condition_name`
-
-#### Trigger Codes
-- **Condition trigger column**: `trigcondition`
-- **Item trigger column**: `trigitem`
-- **Trial start code**: `S254`
-- **Trial end code**: `S255`
-- **Eye event window start**: `S250` (optional)
-- **Eye event window end**: `S251` (optional)
-
-#### Stimulus Triggers
-- **Condition triggers**: `S211, S213, S221, S223`
-- **Item triggers**: `S1:S112`
-
-### Run Interest Area Processing
-
-1. Review your settings
-2. Optionally click **Save Configuration** to reuse later
-3. Click **OK** to process
-
-EyeSort will:
-- Read the IA file
-- Calculate pixel boundaries for words/regions
-- Match trials using trigger codes
-- Assign regions to fixations
-- Compute pass structure
-
-### Verify Interest Area Setup
-
-After processing completes:
+**Verify in MATLAB:**
 
 ```matlab
-% Check that region info was added
+assert(EEG.eyesort_processed)
 EEG.region_names
-
-% View an event with region info
-EEG.event(10)
+d = EEG.eyesort_step2_diagnostics;
+[d.fixation_events_seen d.fixations_assigned_to_region]
+d.missing_text_file_keys
 ```
 
-You should see new fields like `region`, `pass`, `fixation_type`, etc.
+The mapped-fixation count should be positive, and missing keys should match only intentionally unused rows.
 
-## Step 4: Label Eye-Tracking Events
+## 4. Inspect the mapping
 
-Now apply labeling rules to identify specific fixation/saccade patterns.
+Choose **EyeSort → 2. Setup Interest Areas → Inspect Parsed Regions**. Compare several rows with the sample stimulus text. Check spaces, region order, and pixel boundaries. Export the table if you want a QC record.
 
-1. Go to: **EyeSort → 3. Eye-Tracking Event Labeling**
-2. The labeling GUI opens
+**Expected result:** Each condition–item row shows the intended literal text and plausible `[start, end]` boundaries for every region.
 
-### Create Your First Label
-
-Let's label "First fixation on Region 2 during first pass":
-
-1. **Time-locked region**: Select `Region2` from dropdown
-2. **Pass on time-locked region**: Select `First`
-3. **Previous region before time-locked region**: Leave as `Any`
-4. **Next region after time-locked region**: Leave as `Any`
-5. **Fixation type**: Select `First of Multiple`
-6. **Saccade direction In**: Select `Any`
-7. **Saccade direction Out**: Select `Any`
-8. **Label description**: Enter: `First fixation on Region 2, first pass`
-
-Click **Add Label** to apply.
-
-### Create Additional Labels
-
-Add a few more labels to practice:
-
-#### Label 2: Last Fixation on Region 3
-- Time-locked: `Region3`
-- Pass: `First`
-- Fixation type: `Last in Region`
-- Description: `Last fixation on Region 3, first pass`
-
-#### Label 3: Regressive Fixations on Region 1
-- Time-locked: `Region1`
-- Pass: `Second`
-- Fixation type: `Any`
-- Description: `Any fixation on Region 1, second pass (regressions)`
-
-#### Label 4: Forward Saccades to Region 2
-- Time-locked: `Region2`
-- Pass: `Any`
-- Saccade In: `Forward`
-- Description: `Forward saccade into Region 2`
-
-### Save Your Label Configuration
-
-Before closing:
-1. Click **Save Label Configuration**
-2. Choose a filename (e.g., `quickstart_labels.mat`)
-3. You can load this in future analyses
-
-## Step 5: Generate BDF File
-
-1. Go to: **EyeSort → Generate BINLISTER BDF File**
-2. Choose output location and filename (default: `eyesort_bins.txt`)
-3. Click **OK**
-
-EyeSort generates a BINLISTER-compatible BDF file with bins for each labeled event pattern.
-
-### Review the BDF
-
-Open the BDF file in a text editor. You should see entries like:
-
-```
-bin 1
-First fixation on Region 2, first pass
-.{021101}
-
-bin 2
-Last fixation on Region 3, first pass
-.{031102}
-```
-
-The 6-digit codes correspond to your labeled events.
-
-## Step 6: Save Labeled Dataset
-
-1. Go to: **EyeSort → Save Labeled Dataset**
-2. Choose a filename (e.g., `sample_eyesort_labeled.set`)
-3. Select save location
-4. Click **OK**
-
-Your labeled dataset is now saved and ready for ERP analysis!
-
-## Verify Your Results
-
-Load your saved dataset and inspect the labeled events:
+**Verify in MATLAB:**
 
 ```matlab
-% Load labeled dataset
-EEG = pop_loadset('sample_eyesort_labeled.set');
-
-% View labeled events
-labeled_events = EEG.event(cellfun(@(x) isnumeric(x) || (ischar(x) && length(x)==6), {EEG.event.type}));
-
-% Check label codes
-{labeled_events.type}
-
-% Check label descriptions
-{labeled_events.eyesort_label_description}
+mapped = find(~cellfun(@isempty, {EEG.event.current_region}));
+EEG.event(mapped(1))
 ```
 
-You should see:
-- 6-digit event codes (e.g., `021101`)
-- Original event types preserved in `original_type`
-- Label descriptions in `eyesort_label_description`
+Inspect `current_region`, `current_word`, `current_word_text`, `region_pass_number`, `fixation_in_pass`, and `is_last_in_pass`. If the mapping is wrong, correct Step 2 before continuing.
 
-## Next Steps: ERPLAB Integration
+## 5. Queue and apply fixation labels
 
-To continue with ERP analysis in ERPLAB:
+Choose **EyeSort → 4. Eye-Tracking Event Labeling**. Load the sample label queue if supplied. Otherwise create a broad first label:
 
-1. Load your labeled dataset in EEGLAB
-2. Use ERPLAB's `pop_binlister()`:
-   ```matlab
-   EEG = pop_binlister(EEG, 'BDF', 'eyesort_bins.txt', ...
-                       'IndexEL', 1, 'SendEL2', 'EEG', ...
-                       'Voutput', 'EEG');
-   ```
-3. Continue with `pop_epochbin()`, `pop_averager()`, etc.
+1. enter a descriptive label name;
+2. choose **Numeric code (CCRRLL)**;
+3. select one region known to contain sample fixations;
+4. leave optional filters unchecked for the first validation label;
+5. click **Add Label to Queue**.
 
-## Troubleshooting
+Save the full queue, then click **Apply All & Finish**. If a conflict dialog appears, review the existing and proposed labels before choosing replace or keep.
 
-### "No labeled events found"
-- Check that interest areas were set up (Step 3)
-- Try relaxing labeling criteria (use "Any" for more fields)
-- Verify events have region information: `{EEG.event.region}`
+**Expected result:** At least one fixation matches. EyeSort automatically writes `<sample>_processed.set/.fdt` and `eyesort_labeling_summary_NNN.csv` to the Step 1 output directory. There is no separate save command.
 
-### BDF file is empty
-- Verify you added labels in Step 4
-- Check that some events matched your criteria
-- Look for error messages in MATLAB command window
+**Verify in MATLAB:**
 
-## Summary
+```matlab
+labeled = ~cellfun(@isempty, {EEG.event.eyesort_full_code});
+assert(nnz(labeled) > 0)
+unique({EEG.event(labeled).eyesort_full_code})
+unique({EEG.event(labeled).bdf_label_description})
+EEG.eyesort_last_label_diagnostics
+```
 
-Congratulations! You've completed the full EyeSort workflow:
+Spot-check that `original_type` preserves the incoming fixation marker and that `bdf_full_description` is readable.
 
-✅ Loaded synchronized EEG + eye-tracking data  
-✅ Defined text-based interest areas  
-✅ Applied flexible labeling criteria  
-✅ Generated BINLISTER BDF file  
-✅ Saved labeled dataset for ERP analysis
+## 6. Reload the saved output
 
-## What's Next?
+Use the actual base filename shown in the output directory:
 
-- Try the [Full Pipeline Tutorial](/tutorials/full-pipeline) for batch processing
-- Learn about [Pass Structure](/docs/concepts/pass-structure) in depth
-- Explore [Fixation Types](/docs/concepts/fixation-types)
-- Process your own data!
+```matlab
+EEG = pop_loadset('filename', 'SAMPLE_processed.set', ...
+                  'filepath', '/path/to/output');
+assert(EEG.eyesort_processed)
+labeled = ~cellfun(@isempty, {EEG.event.eyesort_full_code});
+T = table({EEG.event(labeled).original_type}', ...
+          {EEG.event(labeled).eyesort_full_code}', ...
+          {EEG.event(labeled).bdf_full_description}', ...
+          'VariableNames', {'Original','CanonicalCode','Description'});
+T(1:min(10,height(T)), :)
+```
 
-## Questions?
+**Expected result:** The reloaded file contains canonical codes, original types, descriptions, and all Step 2 behavioral metadata.
 
-- Check [Troubleshooting](/docs/troubleshooting)
-- Review [FAQ](/docs/faq)
-- [Contact us](/contact) or visit [GitHub Discussions](https://github.com/emac-usf/EyeSort/discussions)
+## 7. Generate and verify the optional BDF
+
+Choose **EyeSort → Generate BINLISTER BDF File** and save the default `eyesort_bins.txt`.
+
+**Expected result:** The file contains one or more BINLISTER bins. Codes with the same condition description and label description may be joined in one expression.
+
+**Verify in MATLAB:**
+
+```matlab
+assert(isfile(fullfile('/path/to/output', 'eyesort_bins.txt')))
+type(fullfile('/path/to/output', 'eyesort_bins.txt'))
+```
+
+Before running BINLISTER, keep or restore numeric event types:
+
+```matlab
+EEG = pop_convert_event_codes(EEG, 'numeric');
+```
+
+## Preserve the run
+
+Choose **EyeSort → History Scripts → Save processing history script**. Keep the generated `.m` file with its text-IA config, label queue, and localized IA-file sidecars.
+
+For your own data, next read [prepare inputs](/docs/start-here/prepare-inputs), the [single-dataset guide](/docs/guides/single-dataset), and [reporting guidance](/docs/guides/frp-deconvolution).
 
 

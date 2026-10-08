@@ -1,72 +1,46 @@
-import { DATASETS } from "@/content/datasets";
+import Link from "next/link";
 
 export const metadata = {
-  title: "Datasets – EyeSort",
-  description: "Sample datasets for testing and learning EyeSort",
+  title: "Sample Data – EyeSort",
+  description: "Find EyeSort sample data and compatibility files in Resources.",
 };
 
 export default function DatasetsPage() {
   return (
-    <div className="mx-auto max-w-5xl px-4 py-12">
-      <header className="mb-12">
-        <h1 className="text-4xl font-bold text-slate-900 mb-4">Test Datasets</h1>
-        <p className="text-lg text-slate-600">
-          Download sample datasets to test your EyeSort installation and learn the workflow
+    <div className="mx-auto max-w-4xl px-4 py-16 text-slate-900">
+      <header>
+        <p className="text-sm font-semibold uppercase tracking-widest text-sky-700">
+          Compatibility page
+        </p>
+        <h1 className="mt-3 text-4xl font-bold tracking-tight">Sample data</h1>
+        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
+          EyeSort sample downloads now live in Resources, where the release compatibility
+          bundle is clearly separated from the canonical OSF project record.
         </p>
       </header>
 
-      <div className="space-y-8">
-        {DATASETS.map((dataset, idx) => (
-          <article
-            key={idx}
-            className="p-6 bg-white border border-slate-200 rounded-lg shadow-sm"
+      <section className="mt-10 rounded-xl border border-slate-200 bg-slate-50 p-6">
+        <h2 className="text-2xl font-semibold">Choose the right resource</h2>
+        <p className="mt-3 leading-relaxed text-slate-700">
+          Use the release-hosted compatibility ZIP for a first run. Use the OSF record
+          for the open example-data and configuration record. File descriptions, links,
+          and citation guidance are maintained together on Resources.
+        </p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link
+            href="/resources#sample-data"
+            className="rounded-lg bg-sky-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-sky-700"
           >
-            <h2 className="text-2xl font-semibold text-slate-900 mb-3">
-              {dataset.title}
-            </h2>
-            <p className="text-slate-700 mb-4">{dataset.description}</p>
-
-            <div className="mb-4">
-              <h3 className="text-sm font-semibold text-slate-600 uppercase tracking-wider mb-2">
-                Contents
-              </h3>
-              <ul className="list-disc list-inside space-y-1 text-slate-700 text-sm">
-                {dataset.contents.map((item, i) => (
-                  <li key={i}>{item}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="flex items-center justify-between pt-4 border-t border-slate-200">
-              <div className="space-y-1">
-                <p className="text-xs text-slate-500">License: {dataset.license}</p>
-                {dataset.cite && (
-                  <p className="text-xs text-slate-500">Citation: {dataset.cite}</p>
-                )}
-              </div>
-              <a
-                href={dataset.downloadUrl}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white font-medium rounded-lg transition-colors shadow-sm"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                  />
-                </svg>
-                Download
-              </a>
-            </div>
-          </article>
-        ))}
-      </div>
+            View sample resources
+          </Link>
+          <Link
+            href="/tutorials/quickstart"
+            className="rounded-lg border border-slate-300 px-4 py-2 font-semibold text-slate-800 transition-colors hover:border-sky-600 hover:text-sky-700"
+          >
+            Run the quickstart
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

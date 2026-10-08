@@ -1,0 +1,40 @@
+---
+title: Generate a BINLISTER BDF
+description: Create a BINLISTER-compatible descriptor file from canonical EyeSort labels.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - BDF
+  - BINLISTER
+  - ERPLAB
+---
+
+## Generate after labeling
+
+Choose **EyeSort → Generate BINLISTER BDF File** after Step 4. EyeSort searches the remembered output directory for processed datasets, reads canonical `eyesort_full_code` values, and suggests `eyesort_bins.txt`.
+
+BDF generation prefers the canonical field and therefore still works when `EEG.event.type` is descriptive. The dataset should nevertheless use numeric types when passed to BINLISTER.
+
+## How bins are grouped
+
+EyeSort groups by **condition description plus label description**, not by one raw code per bin. Factorial designs can therefore place multiple canonical codes in a single expression:
+
+```text
+Bin 1
+Valid Target first-pass fixation
+.{010301; 030301}
+```
+
+Different condition trigger codes can share a bin when their descriptive condition text and label description are identical.
+
+## Verify
+
+Open the text file and confirm every planned condition–behavior category, description, and code expression. Compare bin counts after BINLISTER with `eyesort_labeling_summary_NNN.csv`.
+
+For scripts:
+
+```matlab
+generate_bdf_file(outputDir, fullfile(outputDir, 'eyesort_bins.txt'));
+```
+
+“No labeled events found” means Step 4 was not applied, all criteria matched zero fixations, or the selected directory does not contain labeled datasets. Check `eyesort_full_code` and the [diagnostics guide](/docs/reference/diagnostics).

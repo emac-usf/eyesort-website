@@ -1,0 +1,40 @@
+---
+title: Choose or Convert Event-Marker Formats
+description: Control EEG.event.type while preserving EyeSort’s canonical code and original marker.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - event format
+  - marker conversion
+  - eyesort_full_code
+---
+
+## Supported formats
+
+Step 4 and **EyeSort → Modify Event Code Format** support:
+
+- **Numeric:** `CCRRLL`, appropriate for ERPLAB/BINLISTER.
+- **Condition and label description:** `bdf_full_description`.
+- **Description plus fixated word:** appends `current_word_text`.
+- **Description plus word identifier:** appends the raw `current_word` boundary key, typically a MATLAB-safe value such as `x4_2`.
+- **Region text content:** displays the full current-region text.
+- **Original:** restores `original_type` when available.
+
+Fallbacks use the canonical numeric code when readable metadata is unavailable.
+
+## Canonical identity is preserved
+
+Conversion rewrites only `EEG.event.type` on labeled events. It never changes `eyesort_full_code`. The first pre-EyeSort type is retained in `original_type`, making the display conversion reversible when that field exists.
+
+```matlab
+EEG = convert_event_codes(EEG, 'description_word');
+EEG = convert_event_codes(EEG, 'numeric');
+```
+
+Valid API values are `numeric`, `description`, `description_word`, `description_index`, `region_content`, and `original`.
+
+## Downstream choice
+
+Use readable types for inspection or models that accept strings. Before BINLISTER, convert to `numeric` even though BDF generation itself reads `eyesort_full_code`.
+
+In GUI batch mode, conversion finds `*_processed.set` files in the remembered output directory and saves each converted dataset in place. Retain a reproducible record of the selected format.

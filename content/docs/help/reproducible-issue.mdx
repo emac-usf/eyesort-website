@@ -1,0 +1,47 @@
+---
+title: Report a Reproducible Issue
+description: Collect a minimal, privacy-safe EyeSort report that maintainers can reproduce.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - bug report
+  - GitHub issue
+  - support
+---
+
+## Search first
+
+Search [existing GitHub issues](https://github.com/emac-usf/EyeSort/issues), then create a new issue if the behavior is not already covered.
+
+## Include environment and scope
+
+Report EyeSort version, MATLAB release, EEGLAB version, operating system, single/batch mode, and the exact menu step or function call. Include the full error text and relevant MATLAB warning output.
+
+## Attach reproducible inputs
+
+When privacy and consent permit, provide the smallest dataset and IA rows that reproduce the problem. Remove participant identifiers. Also attach:
+
+- manually saved text-IA configuration;
+- saved label queue;
+- exported processing script and sidecars;
+- the relevant diagnostic structs;
+- expected versus observed output filenames/counts;
+- parsed-region export or screenshots when geometry is involved.
+
+Useful diagnostic exports:
+
+```matlab
+save('eyesort_diagnostics.mat', ...
+    '-struct', 'EEG', ...
+    'eyesort_step2_diagnostics', ...
+    'eyesort_import_diagnostics', ...
+    'eyesort_last_label_diagnostics')
+```
+
+If a field is absent, omit it rather than editing the dataset to create it.
+
+## State exact reproduction steps
+
+List the smallest ordered actions from launching EEGLAB to failure, including conflict choices and event format. For code paths, include the exact call and a stack trace from `ME.getReport('extended')`.
+
+Use GitHub Issues for software defects; use the project [contact page](/contact) for nonpublic or general inquiries.

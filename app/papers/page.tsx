@@ -1,139 +1,47 @@
-import { LINKS } from "@/lib/links";
+import Link from "next/link";
 
 export const metadata = {
   title: "Papers & Citation – EyeSort",
-  description: "How to cite EyeSort in your research",
+  description: "Find EyeSort citation and manuscript information in Resources.",
 };
 
 export default function PapersPage() {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12">
-      <header className="mb-12">
-        <h1 className="text-4xl font-bold text-slate-900 mb-4">
-          Papers & Citation
-        </h1>
-        <p className="text-lg text-slate-600">
-          Citation information for EyeSort
+    <div className="mx-auto max-w-4xl px-4 py-16 text-slate-900">
+      <header>
+        <p className="text-sm font-semibold uppercase tracking-widest text-sky-700">
+          Compatibility page
+        </p>
+        <h1 className="mt-3 text-4xl font-bold tracking-tight">Papers and citation</h1>
+        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
+          Current software citation guidance, manuscript status, the user manual, and
+          release information are now maintained together in Resources.
         </p>
       </header>
 
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold text-slate-900 mb-4">How to Cite</h2>
-        <p className="text-slate-700">Waiting on publication</p>
-      </section>
-
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold text-slate-900 mb-4">
-          Methods & Background
-        </h2>
-        <div className="p-6 bg-white border border-slate-200 rounded-lg shadow-sm">
-          <p className="text-slate-700 mb-4">
-            For technical details about EyeSort&apos;s methodology, labeling system, and
-            validation, please refer to our documentation and the EyeSort User Manual.
-          </p>
-          <div className="flex gap-4">
-            <a
-              href={LINKS.userManual}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white font-medium rounded-lg transition-colors shadow-sm"
-            >
-              User Manual (PDF)
-            </a>
-            <a
-              href="/docs"
-              className="inline-flex items-center px-4 py-2 border-2 border-slate-300 hover:border-slate-400 text-slate-900 font-medium rounded-lg transition-colors"
-            >
-              Documentation
-            </a>
-          </div>
+      <section className="mt-10 rounded-xl border border-slate-200 bg-slate-50 p-6">
+        <h2 className="text-2xl font-semibold">Use the current record</h2>
+        <p className="mt-3 leading-relaxed text-slate-700">
+          Resources distinguishes the EyeSort 1.0 software citation from the manuscript
+          preprint and does not imply a journal publication or DOI that the project has
+          not posted.
+        </p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link
+            href="/resources#citation"
+            className="rounded-lg bg-sky-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-sky-700"
+          >
+            View citation and manuscript
+          </Link>
+          <Link
+            href="/about"
+            className="rounded-lg border border-slate-300 px-4 py-2 font-semibold text-slate-800 transition-colors hover:border-sky-600 hover:text-sky-700"
+          >
+            Meet the project team
+          </Link>
         </div>
       </section>
 
-      <section className="mb-12">
-        <h2 className="text-2xl font-semibold text-slate-900 mb-4">
-          Related Publications
-        </h2>
-        <div className="space-y-6">
-          <div className="p-6 bg-white border border-slate-200 rounded-lg shadow-sm">
-            <h3 className="text-lg font-semibold text-slate-900 mb-2">
-              Looking inside and beyond eye fixations in reading
-            </h3>
-            <p className="text-slate-600 mb-1">
-              Schotter, E. R., & Payne, B. R. (2026)
-            </p>
-            <p className="text-slate-500 text-sm mb-4">
-              Trends in Cognitive Sciences
-            </p>
-            <a
-              href="https://www.sciencedirect.com/science/article/abs/pii/S1364661326000343"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white font-medium rounded-lg transition-colors shadow-sm"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-              View on ScienceDirect
-            </a>
-          </div>
-
-          <div className="p-6 bg-white border border-slate-200 rounded-lg shadow-sm">
-            <h3 className="text-lg font-semibold text-slate-900 mb-2">
-              EyeSort: An EEGLAB-integrated toolbox for behavioral categorization of eye fixation events in EEG-EM co-registered data
-            </h3>
-            <p className="text-slate-600 mb-4">
-              Snyder, B., Milligan, S., & Schotter, E. (2025)
-            </p>
-            <a
-              href="https://www.researchgate.net/publication/397322985_EyeSort_an_EEGLAB-integrated_toolbox_for_behavioral_categorization_of_eye_fixation_events_in_EEG-EM_co-registered_data"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white font-medium rounded-lg transition-colors shadow-sm"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              View Preprint on ResearchGate
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2 className="text-2xl font-semibold text-slate-900 mb-4">Source Code</h2>
-        <div className="p-6 bg-white border border-slate-200 rounded-lg shadow-sm">
-          <p className="text-slate-700 mb-4">
-            EyeSort is open-source software released under the GNU General Public
-            License v3.0 or later.
-          </p>
-          <div className="flex gap-4">
-            <a
-              href={LINKS.githubRepo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-900 font-medium rounded-lg transition-colors border border-slate-200"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  fillRule="evenodd"
-                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              View on GitHub
-            </a>
-            <a
-              href={LINKS.githubRepo + "/blob/main/LICENSE"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center px-4 py-2 border-2 border-slate-300 hover:border-slate-400 text-slate-900 font-medium rounded-lg transition-colors"
-            >
-              License (GPL-3.0)
-            </a>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

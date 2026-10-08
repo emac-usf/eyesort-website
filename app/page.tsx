@@ -1,348 +1,308 @@
 import Link from "next/link";
 import { LINKS } from "@/lib/links";
-import { getLatestVersion } from "@/lib/version";
+import { RELEASE } from "@/lib/site";
 
-export default async function HomePage() {
-  const version = await getLatestVersion();
+const workflow = [
+  "1. Load EEG Dataset(s)",
+  "2. Setup Interest Areas → Text-Based Sentence Contents and Interest Areas",
+  "Inspect Parsed Regions (optional)",
+  "3. Import IA Columns to Events (optional)",
+  "4. Eye-Tracking Event Labeling",
+  "Generate BINLISTER BDF File (optional)",
+  "Modify Event Code Format (optional)",
+  "Export a processing history script (optional)",
+];
 
+export default function HomePage() {
   return (
-    <main className="min-h-screen bg-white text-slate-900">
-      {/* Hero Section */}
-      <section className="relative border-b border-slate-200 bg-gradient-to-b from-slate-50 to-white">
-        <div className="max-w-6xl mx-auto px-4 py-20 md:py-28">
-          <div className="text-center mb-8">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent">
-              EyeSort
-            </h1>
-            <p className="text-xl md:text-2xl text-slate-700 mb-8 max-w-3xl mx-auto">
-              Region-aware eye-tracking event labeling for EEGLAB
-            </p>
-            <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
-              Integrate text/pixel interest areas with synchronized eye-tracking events
-              and build robust, reproducible label codes for ERP binning.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <a
-                href={LINKS.latestRelease}
-                className="px-6 py-3 rounded-lg bg-sky-600 hover:bg-sky-700 transition font-semibold text-white shadow-lg"
-              >
-                Download v{version}
-              </a>
-              <Link
-                href="/docs"
-                className="px-6 py-3 rounded-lg border-2 border-slate-300 hover:border-sky-600 hover:text-sky-700 transition font-semibold"
-              >
-                Get Started
-              </Link>
-              <a
-                href={LINKS.githubRepo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3 rounded-lg border-2 border-slate-300 hover:border-slate-400 transition font-semibold"
-              >
-                View on GitHub
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* What is EyeSort */}
-      <section className="border-b border-slate-200">
-        <div className="max-w-6xl mx-auto px-4 py-16">
-          <h2 className="text-3xl font-bold mb-6 text-slate-900">What is EyeSort?</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <p className="text-slate-700 leading-relaxed mb-4">
-                EyeSort is an EEGLAB plugin that provides a guided GUI workflow for
-                researchers studying reading and visual processing with co-registered
-                eye-tracking and EEG data.
-              </p>
-              <p className="text-slate-700 leading-relaxed">
-                It systematically labels fixations and saccades based on spatial regions,
-                temporal passes, fixation types, and saccade directions—then generates
-                standardized event codes that integrate seamlessly with ERPLAB.
-              </p>
-            </div>
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <svg className="w-6 h-6 text-sky-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span className="text-slate-700">Load single or multiple EEG datasets with synchronized eye-tracking</span>
-              </div>
-              <div className="flex items-start gap-3">
-                <svg className="w-6 h-6 text-sky-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span className="text-slate-700">Define interest areas using text-based sentences or pixel regions</span>
-              </div>
-              <div className="flex items-start gap-3">
-                <svg className="w-6 h-6 text-sky-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span className="text-slate-700">Label fixations and saccades with flexible criteria</span>
-              </div>
-              <div className="flex items-start gap-3">
-                <svg className="w-6 h-6 text-sky-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span className="text-slate-700">Auto-generate BINLISTER Bin Descriptor Files</span>
-              </div>
-              <div className="flex items-start gap-3">
-                <svg className="w-6 h-6 text-sky-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span className="text-slate-700">Save labeled datasets for ERP analysis workflows</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why EyeSort */}
-      <section className="border-b border-slate-200 bg-slate-50">
-        <div className="max-w-6xl mx-auto px-4 py-16">
-          <h2 className="text-3xl font-bold mb-8 text-slate-900">Why EyeSort?</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-xl border border-slate-200 bg-white shadow-sm">
-              <h3 className="text-xl font-semibold mb-3 text-slate-900">Systematic & Reproducible</h3>
-              <p className="text-slate-700">
-                Replace ad-hoc scripts with a standardized workflow. Save and share
-                configurations to ensure consistent analysis across datasets and labs.
-              </p>
-            </div>
-            <div className="p-6 rounded-xl border border-slate-200 bg-white shadow-sm">
-              <h3 className="text-xl font-semibold mb-3 text-slate-900">Flexible Criteria</h3>
-              <p className="text-slate-700">
-                Label events based on region, pass (first/second/third+), fixation type
-                (single, first, last), saccade direction, and more.
-              </p>
-            </div>
-            <div className="p-6 rounded-xl border border-slate-200 bg-white shadow-sm">
-              <h3 className="text-xl font-semibold mb-3 text-slate-900">ERPLAB Integration</h3>
-              <p className="text-slate-700">
-                Generated BDF files work seamlessly with ERPLAB's binlister, enabling
-                smooth transitions from labeling to ERP analysis.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Requirements */}
-      <section className="border-b border-slate-200">
-        <div className="max-w-6xl mx-auto px-4 py-16">
-          <h2 className="text-3xl font-bold mb-6 text-slate-900">Requirements</h2>
-          <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 shadow-sm">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-3">Software</h3>
-                <ul className="space-y-2 text-slate-700">
-                  <li className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-sky-600 rounded-full"></span>
-                    MATLAB (R2018b or later recommended)
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-sky-600 rounded-full"></span>
-                    EEGLAB (2021.0 or later)
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-3">Data Prerequisites</h3>
-                <ul className="space-y-2 text-slate-700">
-                  <li className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-sky-600 rounded-full"></span>
-                    Synchronized EEG + eye-tracking events
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-sky-600 rounded-full"></span>
-                    Fixation and saccade events in EEG.event
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-sky-600 rounded-full"></span>
-                    Position information (X coordinates)
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Download & Install */}
-      <section className="border-b border-slate-200 bg-slate-50">
-        <div className="max-w-6xl mx-auto px-4 py-16">
-          <h2 className="text-3xl font-bold mb-6 text-slate-900">Download & Install</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-              <h3 className="text-xl font-semibold mb-4 text-slate-900">Latest Release</h3>
-              <p className="text-slate-700 mb-4">
-                Download EyeSort v{version} from GitHub Releases
-              </p>
-              <a
-                href={LINKS.latestRelease}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white font-medium rounded-lg transition-colors shadow-sm"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                Download v{version}
-              </a>
-            </div>
-            <div className="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-              <h3 className="text-xl font-semibold mb-4 text-slate-900">Installation Guide</h3>
-              <ol className="space-y-2 text-slate-700 text-sm mb-4">
-                <li>1. Download and extract EyeSort</li>
-                <li>2. Copy to EEGLAB plugins directory</li>
-                <li>3. Launch EEGLAB in MATLAB</li>
-                <li>4. Verify EyeSort menu appears</li>
-              </ol>
-              <Link
-                href="/docs/installation"
-                className="inline-flex items-center text-sky-600 hover:text-sky-700 font-medium"
-              >
-                Full Installation Instructions →
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Getting Started */}
-      <section className="border-b border-slate-200">
-        <div className="max-w-6xl mx-auto px-4 py-16">
-          <h2 className="text-3xl font-bold mb-6 text-slate-900">Getting Started</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <Link
-              href="/docs/first-run"
-              className="p-6 bg-white border border-slate-200 hover:border-sky-600 rounded-xl transition-colors shadow-sm"
-            >
-              <div className="text-3xl mb-3">📖</div>
-              <h3 className="text-xl font-semibold mb-2 text-slate-900">First Run Guide</h3>
-              <p className="text-slate-600 text-sm">
-                Walk through your first time using EyeSort with sample data
-              </p>
-            </Link>
+    <div className="min-h-screen bg-white text-slate-900">
+      <section className="border-b border-slate-200 bg-gradient-to-b from-slate-50 to-white">
+        <div className="mx-auto max-w-6xl px-4 py-20 md:py-28">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-sky-700">
+            EyeSort {RELEASE.version} for EEGLAB
+          </p>
+          <h1 className="max-w-5xl text-4xl font-bold tracking-tight text-slate-950 md:text-6xl">
+            Turn synchronized fixation events into reproducible, analysis-ready EEG
+            event markers.
+          </h1>
+          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-slate-600 md:text-xl">
+            EyeSort maps fixations onto text-defined interest areas, applies
+            behavior-contingent labels, and preserves traceable event metadata for
+            downstream analysis.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-4">
             <Link
               href="/tutorials/quickstart"
-              className="p-6 bg-white border border-slate-200 hover:border-sky-600 rounded-xl transition-colors shadow-sm"
+              className="rounded-lg bg-sky-600 px-6 py-3 font-semibold text-white shadow-sm transition-colors hover:bg-sky-700"
             >
-              <div className="text-3xl mb-3">🚀</div>
-              <h3 className="text-xl font-semibold mb-2 text-slate-900">Quickstart Tutorial</h3>
-              <p className="text-slate-600 text-sm">
-                Complete the full workflow from data loading to labeled output
-              </p>
+              Start with sample data
             </Link>
-            <Link
-              href="/datasets"
-              className="p-6 bg-white border border-slate-200 hover:border-sky-600 rounded-xl transition-colors shadow-sm"
+            <a
+              href={LINKS.pluginZip}
+              className="rounded-lg border-2 border-slate-300 px-6 py-3 font-semibold text-slate-900 transition-colors hover:border-sky-600 hover:text-sky-700"
             >
-              <div className="text-3xl mb-3">💾</div>
-              <h3 className="text-xl font-semibold mb-2 text-slate-900">Sample Dataset</h3>
-              <p className="text-slate-600 text-sm">
-                Download test data to practice the EyeSort workflow
-              </p>
-            </Link>
+              Download {RELEASE.version}
+            </a>
           </div>
         </div>
       </section>
 
-      {/* How to Cite */}
-      <section className="border-b border-slate-200 bg-slate-50">
-        <div className="max-w-6xl mx-auto px-4 py-16">
-          <h2 className="text-3xl font-bold mb-6 text-slate-900">How to Cite</h2>
-          <div className="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-            <p className="text-slate-700">Waiting on publication</p>
+      <section className="border-b border-slate-200" aria-labelledby="scope-heading">
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <div className="grid gap-8 md:grid-cols-2">
+            <div>
+              <h2 id="scope-heading" className="text-3xl font-bold text-slate-900">
+                Where EyeSort fits
+              </h2>
+              <p className="mt-4 leading-relaxed text-slate-700">
+                EyeSort operates after EEG and eye-tracking synchronization and eye-event
+                detection, and before FRP, ERP, or deconvolution analysis. It labels
+                fixation events using region, pass, fixation-class, neighboring-region,
+                and incoming or outgoing saccade-direction criteria.
+              </p>
+            </div>
+            <div className="rounded-xl border border-amber-200 bg-amber-50 p-6">
+              <h3 className="text-lg font-semibold text-slate-900">
+                Deliberate scope
+              </h3>
+              <p className="mt-3 leading-relaxed text-slate-700">
+                EyeSort does not synchronize modalities, detect fixations, repair blinks
+                or missing eye data, clean eye-tracker data, preprocess EEG, separate
+                temporally overlapping neural activity, or replace deconvolution.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Support */}
-      <section className="border-b border-slate-200">
-        <div className="max-w-6xl mx-auto px-4 py-16">
-          <h2 className="text-3xl font-bold mb-6 text-slate-900">Support</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-              <h3 className="text-lg font-semibold mb-3 text-slate-900">Documentation</h3>
-              <p className="text-slate-600 text-sm mb-4">
-                Comprehensive guides, tutorials, and reference materials
+      <section
+        className="border-b border-slate-200 bg-slate-50"
+        aria-labelledby="fit-heading"
+      >
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <h2 id="fit-heading" className="text-3xl font-bold text-slate-900">
+            Check your data fit
+          </h2>
+          <p className="mt-4 max-w-3xl leading-relaxed text-slate-600">
+            EyeSort 1.0 is for reading researchers working with co-registered EEG and
+            eye-tracking data whose eye events and trial markers are already available
+            in EEGLAB.
+          </p>
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+              <h3 className="text-xl font-semibold text-slate-900">You will need</h3>
+              <ul className="mt-4 list-disc space-y-2 pl-5 text-slate-700">
+                <li>Continuous EEGLAB <code>.set</code> files</li>
+                <li>Synchronized fixation and saccade events in <code>EEG.event</code></li>
+                <li>Horizontal fixation and saccade position fields</li>
+                <li>Item, condition, and trial-boundary triggers</li>
+                <li>A tab-delimited stimulus and interest-area file</li>
+              </ul>
+            </div>
+            <div className="rounded-xl border border-slate-300 bg-slate-900 p-6 text-white shadow-sm">
+              <h3 className="text-xl font-semibold">EyeSort 1.0 design envelope</h3>
+              <p className="mt-4 leading-relaxed text-slate-200">
+                The current text geometry is designed for single-line sentence displays
+                using a fixed-width font, uniform pixels per character, and consistently
+                named regions across the relevant trials. Region assignment uses horizontal
+                X coordinates.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-slate-200" aria-labelledby="workflow-heading">
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <h2 id="workflow-heading" className="text-3xl font-bold text-slate-900">
+            A workflow that matches the plugin
+          </h2>
+          <p className="mt-4 max-w-3xl text-slate-600">
+            The sequence below follows the EyeSort menu. Optional steps can be added when
+            your analysis needs them.
+          </p>
+          <ol className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+            {workflow.map((step, index) => (
+              <li
+                key={step}
+                className="rounded-lg border border-slate-200 bg-white p-4 text-sm font-medium text-slate-800 shadow-sm"
+              >
+                <span className="mb-2 block text-xs font-semibold uppercase tracking-wide text-sky-700">
+                  Stage {index + 1}
+                </span>
+                {step}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section
+        className="border-b border-slate-200 bg-slate-50"
+        aria-labelledby="outputs-heading"
+      >
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <h2 id="outputs-heading" className="text-3xl font-bold text-slate-900">
+            What you get
+          </h2>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              ["Processed datasets", "Labeled *_processed.set/.fdt files and optional *_eyesort_ia.set intermediates."],
+              ["Traceable event metadata", "Canonical EyeSort codes, original event types, regions, words, passes, and label descriptions."],
+              ["Run summaries", "Optional labeling-summary CSV output with per-dataset and total counts."],
+              ["BINLISTER definitions", "An optional BDF, typically eyesort_bins.txt, grouped from labeled events."],
+              ["Reusable configurations", "Saved text-IA and label-queue configuration files."],
+              ["Portable replay", "An exported MATLAB processing script with the sidecars needed to rerun a batch."],
+            ].map(([title, description]) => (
+              <article
+                key={title}
+                className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+              >
+                <h3 className="font-semibold text-slate-900">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">{description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-slate-200" aria-labelledby="useful-heading">
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <h2 id="useful-heading" className="text-3xl font-bold text-slate-900">
+            Built for reviewable decisions
+          </h2>
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            {[
+              ["Diagnose before labeling", "Preflight checks surface trigger, condition/item, and interest-area mismatches before they become silent zero-match results."],
+              ["Repeat the same logic", "Saved label queues, configurations, batch processing, EEGLAB history, and replay scripts make the applied criteria inspectable."],
+              ["Keep options downstream", "Display formats are reversible when original event types are present, while canonical codes support optional ERPLAB/BINLISTER handoff and other analyses."],
+            ].map(([title, description]) => (
+              <article key={title}>
+                <h3 className="text-xl font-semibold text-slate-900">{title}</h3>
+                <p className="mt-3 leading-relaxed text-slate-600">{description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="border-b border-slate-200 bg-slate-50"
+        aria-labelledby="orientation-heading"
+      >
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <h2 id="orientation-heading" className="text-3xl font-bold text-slate-900">
+            Versioned, documented, and open
+          </h2>
+          <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <article className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+              <p className="text-sm font-semibold uppercase tracking-wide text-sky-700">
+                Current release
+              </p>
+              <h3 className="mt-2 text-2xl font-bold text-slate-900">EyeSort {RELEASE.version}</h3>
+              <p className="mt-2 text-sm text-slate-600">
+                Published {new Date(`${RELEASE.published}T00:00:00`).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  timeZone: "UTC",
+                })}.
               </p>
               <Link
-                href="/docs"
-                className="text-sky-600 hover:text-sky-700 text-sm font-medium"
+                href="/resources"
+                className="mt-5 inline-block font-semibold text-sky-700 hover:text-sky-800"
               >
-                Browse Docs →
+                Downloads and release record →
               </Link>
-            </div>
-            <div className="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-              <h3 className="text-lg font-semibold mb-3 text-slate-900">Report Issues</h3>
-              <p className="text-slate-600 text-sm mb-4">
-                Found a bug or have a feature request? Open an issue on GitHub
+            </article>
+            <article className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+              <p className="text-sm font-semibold uppercase tracking-wide text-sky-700">
+                Methods
               </p>
-              <a
-                href={LINKS.githubIssues}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sky-600 hover:text-sky-700 text-sm font-medium"
-              >
-                GitHub Issues →
-              </a>
-            </div>
-            <div className="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-              <h3 className="text-lg font-semibold mb-3 text-slate-900">Contact Us</h3>
-              <p className="text-slate-600 text-sm mb-4">
-                Questions or collaboration inquiries? Reach out to the team
+              <h3 className="mt-2 text-xl font-bold text-slate-900">
+                Manual and manuscript
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                Use the versioned manual for the complete workflow and the manuscript
+                preprint for scientific rationale and validation.
               </p>
               <Link
-                href="/contact"
-                className="text-sky-600 hover:text-sky-700 text-sm font-medium"
+                href="/resources#citation"
+                className="mt-5 inline-block font-semibold text-sky-700 hover:text-sky-800"
               >
-                Contact Info →
+                Read and cite EyeSort →
               </Link>
-            </div>
+            </article>
+            <article className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+              <p className="text-sm font-semibold uppercase tracking-wide text-sky-700">
+                Sample target
+              </p>
+              <h3 className="mt-2 text-xl font-bold text-slate-900">
+                A labeled processed dataset
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                The sample workflow leads to a <code>*_processed.set</code> dataset with
+                canonical EyeSort codes and traceable fixation metadata.
+              </p>
+              <Link
+                href="/tutorials/quickstart"
+                className="mt-5 inline-block font-semibold text-sky-700 hover:text-sky-800"
+              >
+                Run the sample workflow →
+              </Link>
+            </article>
+            <article className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+              <p className="text-sm font-semibold uppercase tracking-wide text-sky-700">
+                Maintainers
+              </p>
+              <h3 className="mt-2 text-xl font-bold text-slate-900">
+                Eye Movements &amp; Cognition Lab
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                Brandon Snyder, Sara Milligan, and Elizabeth R. Schotter at the
+                University of South Florida.
+              </p>
+              <Link
+                href="/about"
+                className="mt-5 inline-block font-semibold text-sky-700 hover:text-sky-800"
+              >
+                Project roles and support →
+              </Link>
+            </article>
+          </div>
+          <div className="mt-8 flex flex-wrap gap-5 text-sm">
+            <Link href="/docs" className="font-semibold text-sky-700 hover:text-sky-800">
+              Browse documentation
+            </Link>
+            <a
+              href={LINKS.githubRepo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-sky-700 hover:text-sky-800"
+            >
+              Inspect the source code
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Lab Info */}
-      <section className="bg-slate-50">
-        <div className="max-w-6xl mx-auto px-4 py-16">
-          <div className="text-center">
-            <h2 className="text-2xl font-semibold mb-4 text-slate-900">
-              Eye Movements & Cognition Lab
-            </h2>
-            <p className="text-slate-700 mb-2">University of South Florida</p>
-            <p className="text-slate-600 text-sm mb-6">
-              Developed by Brandon Snyder, Sara Milligan, and Elizabeth Schotter
-            </p>
-            <div className="flex justify-center gap-4">
-              <a
-                href={LINKS.githubOrg}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-600 hover:text-slate-900 transition-colors"
-              >
-                GitHub
-              </a>
-              <span className="text-slate-400">•</span>
-              <Link href="/about" className="text-slate-600 hover:text-slate-900 transition-colors">
-                About
-              </Link>
-              <span className="text-slate-400">•</span>
-              <a
-                href={LINKS.githubRepo + "/blob/main/LICENSE"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-600 hover:text-slate-900 transition-colors"
-              >
-                GPL-3.0 License
-              </a>
-            </div>
-          </div>
+      <section className="bg-slate-900" aria-labelledby="install-heading">
+        <div className="mx-auto max-w-4xl px-4 py-16 text-center">
+          <h2 id="install-heading" className="text-3xl font-bold text-white">
+            Install and run the sample workflow
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-slate-300">
+            Start with the known-compatible files before adapting EyeSort to your own
+            event fields and stimuli.
+          </p>
+          <Link
+            href="/tutorials/quickstart"
+            className="mt-8 inline-flex rounded-lg bg-sky-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-sky-400"
+          >
+            Open the quickstart
+          </Link>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

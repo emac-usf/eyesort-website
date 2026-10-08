@@ -1,0 +1,44 @@
+---
+title: MATLAB API
+description: Public pop_* entry points and core non-GUI functions in EyeSort 1.0.
+lastUpdated: 2026-10-07
+lastVerified: 2026-10-07
+aliases:
+  - API
+  - pop functions
+  - core functions
+---
+
+## GUI/history entry points
+
+```matlab
+[EEG, com] = pop_load_datasets(EEG, selectedFiles, outputDir);
+[EEG, com] = pop_load_text_ia(EEG, configPath, 'reportMode', 'command');
+[EEG, com] = pop_import_ia_columns(EEG, iaFile, condCol, itemCol, columns, reportMode);
+[EEG, com] = pop_label_datasets(EEG, labelConfig, ...
+    'conflictResolution', 'yes', 'showRegionMap', false);
+[EEG, com] = pop_convert_event_codes(EEG, eventFormat);
+[EEG, com] = pop_generate_bdf(EEG, source, outputFile);
+[EEG, com] = pop_inspect_regions(EEG); % read-only GUI
+```
+
+`selectedFiles` is a cell array or path; all files must share a directory. `eventFormat` is one of `numeric`, `description`, `description_word`, `description_index`, `region_content`, or `original`.
+
+## Core functions
+
+```matlab
+EEG = compute_text_based_ia(EEG, textIAConfig, 'reportMode', 'command');
+EEG = import_ia_columns(EEG, iaFile, condCol, itemCol, columns, 'command');
+[EEG, com, chosen] = label_datasets_core(EEG, ...
+    'timeLockedRegions', {'Target'}, 'passOptions', 2, ...
+    'fixationOptions', [1 2], 'labelDescription', 'Target first pass', ...
+    'saccadeInOptions', 1, 'saccadeOutOptions', 1, ...
+    'conflictResolution', 'yes', 'eventFormat', 'numeric');
+EEG = convert_event_codes(EEG, 'numeric');
+generate_bdf_file(outputDir, outputFile);
+scriptPath = save_eyesort_session_script(outputScript);
+```
+
+Label options: pass `1=any, 2=first, 3=second, 4=third+`; fixation `0=any, 1=single, 2=first-of-multiple, 3=second, 4=subsequent, 5=last`. Incoming and outgoing saccade directions are separate options: `saccadeInOptions` and `saccadeOutOptions` each use `1=any, 2=forward, 3=backward`.
+
+Run `eeg_checkset(EEG, 'eventconsistency')` after programmatic changes. Prefer saved config files for complete, reviewable parameter sets.

@@ -1,0 +1,34 @@
+---
+title: EyeSort 1.0 Released
+description: First stable EyeSort release with text-based interest-area mapping, queue-based fixation labeling, and reproducible batch export
+date: 2026-07-09
+version: v1.0
+lastUpdated: 2026-10-07
+---
+
+EyeSort 1.0 is the current stable release of the EEGLAB plugin for behavior-contingent fixation-event labeling in synchronized EEG and eye-tracking reading data.
+
+## What version 1.0 provides
+
+- Text-based interest-area mapping for single-line, fixed-width sentence stimuli
+- Trial-level region, word, pass, and fixation-sequence metadata
+- Queue-based fixation labels using region, pass, fixation type, and saccade-direction context
+- Canonical six-digit `CCRRLL` codes with preserved original event types
+- Optional BINLISTER-compatible BDF generation
+- Single-dataset and one-at-a-time batch processing
+- Saved configurations and exported MATLAB processing scripts
+
+## Download
+
+- [Download EyeSort 1.0](https://github.com/emac-usf/EyeSort/releases/latest/download/eyesort1.0.zip)
+- [Download the sample bundle](https://github.com/emac-usf/EyeSort/releases/latest/download/EyeSort_Compatible_Files.zip)
+- [Download the EyeSort 1.0 User Manual](https://github.com/emac-usf/EyeSort/releases/latest/download/EyeSort_Manual.pdf)
+
+See the [installation guide](/docs/start-here/install-upgrade) and [quickstart tutorial](/tutorials/quickstart) for a verified first run.
+
+## Scope
+
+EyeSort 1.0 assigns labels to fixation events. Saccade direction can be used as selection context, but EyeSort does not label saccade events themselves. The release supports text-defined regions; image/pixel-coordinate interest areas are not implemented.
+
+**Release date:** July 9, 2026  
+**License:** GPL-3.0-or-later
