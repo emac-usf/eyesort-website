@@ -61,18 +61,5 @@ export const AUTHORS = [
 ] as const;
 
 export const CITATION = {
-  title:
-    "EyeSort: an EEGLAB-integrated toolbox for behaviorally-informed event marking in EEG-EM co-registered reading data",
-  authors: "Snyder, B., Milligan, S., & Schotter, E. R.",
-  status:
-    "Manuscript available as a preprint; cite the software release until a version of record is available.",
-  software:
-    "Snyder, B., Milligan, S., & Schotter, E. R. (2026). EyeSort (Version 1.0) [Computer software]. https://github.com/emac-usf/EyeSort",
-  bibtex: `@software{eyesort2026,
-  author = {Snyder, Brandon and Milligan, Sara and Schotter, Elizabeth R.},
-  title = {EyeSort},
-  version = {1.0},
-  year = {2026},
-  url = {https://github.com/emac-usf/EyeSort}
-}`,
+  status: "To be determined after publication",
 } as const;

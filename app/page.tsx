@@ -223,14 +223,14 @@ export default function HomePage() {
                 Manual and manuscript
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                Use the versioned manual for the complete workflow and the manuscript
-                preprint for scientific rationale and validation.
+                Use the versioned manual for the complete workflow. The citation is to be
+                determined after publication.
               </p>
               <Link
                 href="/resources#citation"
                 className="mt-5 inline-block font-semibold text-sky-700 hover:text-sky-800"
               >
-                Read and cite EyeSort →
+                View citation status →
               </Link>
             </article>
             <article className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">

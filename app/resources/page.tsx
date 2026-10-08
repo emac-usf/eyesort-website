@@ -141,15 +141,6 @@ export default function ResourcesPage() {
             Browse web documentation
           </Link>
         </div>
-        <div className="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-slate-700">
-          <p className="font-semibold text-slate-900">Known PDF errata</p>
-          <p className="mt-2">
-            Read “GLP-3.0” as “GPL-3.0-or-later,” use lowercase
-            <code className="mx-1">region_pass_number</code>, and read the cache filename as
-            <code className="ml-1">last_text_ia_config.mat</code>. The web documentation
-            reflects the verified 1.0 source when wording differs.
-          </p>
-        </div>
       </section>
 
       <section id="releases" className="scroll-mt-24 border-b border-slate-200 py-12">
@@ -175,45 +166,8 @@ export default function ResourcesPage() {
       </section>
 
       <section id="citation" className="scroll-mt-24 border-b border-slate-200 py-12">
-        <h2 className="text-3xl font-bold">Citation and manuscript status</h2>
-        <div className="mt-6 grid gap-8 lg:grid-cols-2">
-          <article>
-            <h3 className="text-xl font-semibold">Cite the software now</h3>
-            <p className="mt-3 text-slate-700">
-              Until a formal manuscript citation is posted, cite the exact software
-              version used and include an access date when required by your style guide.
-            </p>
-            <pre tabIndex={0} className="mt-4 overflow-x-auto whitespace-pre-wrap rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm leading-relaxed text-slate-800">
-              {CITATION.software}
-            </pre>
-            <h4 className="mt-6 font-semibold text-slate-900">BibTeX</h4>
-            <pre tabIndex={0} className="mt-3 overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm leading-relaxed text-slate-800">
-              {CITATION.bibtex}
-            </pre>
-          </article>
-          <article className="rounded-xl border border-slate-200 bg-slate-50 p-6">
-            <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-              Manuscript
-            </p>
-            <h3 className="mt-2 text-xl font-semibold">
-              {CITATION.title}
-            </h3>
-            <p className="mt-3 text-slate-700">
-              {CITATION.authors} The project does not currently list a journal DOI or
-              version-of-record citation. An earlier public preprint record is available
-              for background; cite the software release until a formal article citation
-              is published.
-            </p>
-            <a
-              href={LINKS.manuscriptPreprint}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${secondaryLinkClass} mt-5`}
-            >
-              View public preprint record
-            </a>
-          </article>
-        </div>
+        <h2 className="text-3xl font-bold">Citation</h2>
+        <p className="mt-4 text-lg leading-relaxed text-slate-700">{CITATION.status}</p>
       </section>
 
       <section id="source-license" className="scroll-mt-24 py-12">
