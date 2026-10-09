@@ -7,6 +7,7 @@ const routes = [
   "/docs/start-here/first-run",
   "/tutorials/quickstart",
   "/resources",
+  "/papers",
   "/about",
 ];
 
@@ -37,6 +38,7 @@ test("mobile primary navigation exposes all primary destinations and download", 
   await expect(navigation.getByRole("link", { name: "Documentation" })).toBeVisible();
   await expect(navigation.getByRole("link", { name: "Tutorials" })).toBeVisible();
   await expect(navigation.getByRole("link", { name: "Resources" })).toBeVisible();
+  await expect(navigation.getByRole("link", { name: "Papers" })).toBeVisible();
   await expect(navigation.getByRole("link", { name: "About" })).toBeVisible();
   await expect(navigation.getByRole("link", { name: /Download EyeSort/ })).toBeVisible();
 });

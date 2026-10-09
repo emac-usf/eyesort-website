@@ -76,6 +76,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/papers" className="text-slate-600 hover:text-slate-900 transition-colors">
+                  Papers
+                </Link>
+              </li>
+              <li>
                 <a href={LINKS.githubIssues} target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-slate-900 transition-colors">
                   Report an issue
                 </a>
